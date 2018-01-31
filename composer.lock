@@ -2226,6 +2226,7 @@
     ],
     "packages-dev": [
         {
+<<<<<<< HEAD
             "name": "doctrine/annotations",
             "version": "v1.6.0",
             "source": {
@@ -2581,6 +2582,8 @@
             "time": "2017-11-19T13:38:54+00:00"
         },
         {
+=======
+>>>>>>> 95ad878e16394aad9cb7c45bc59b286f1ca83db8
             "name": "doctrine/instantiator",
             "version": "1.0.5",
             "source": {
@@ -4303,6 +4306,7 @@
                 "validate"
             ],
             "time": "2018-01-29T19:49:41+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "xethron/laravel-4-generators",
@@ -4409,6 +4413,8 @@
                 "migrations"
             ],
             "time": "2017-09-19T17:31:57+00:00"
+=======
+>>>>>>> 95ad878e16394aad9cb7c45bc59b286f1ca83db8
         }
     ],
     "aliases": [],
