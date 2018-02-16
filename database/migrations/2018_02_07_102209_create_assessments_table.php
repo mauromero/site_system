@@ -60,6 +60,7 @@ class CreateAssessmentsTable extends Migration {
 			$table->boolean('h_pinch_points')->nullable();
 			$table->boolean('h_employee')->nullable();
 			$table->boolean('h_permits')->nullable();
+			$table->boolean('completed')->default(false);
 			$table->integer('facility_id')->index('fk_assessment_facilities1_idx');
 			$table->integer('user_id')->index('fk_assessment_user1_idx');
 			$table->timestamps();
