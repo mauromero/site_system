@@ -15,7 +15,7 @@ class CreateKitLocationsTable extends Migration {
 		Schema::create('kit_locations', function(Blueprint $table)
 		{
 			$table->integer('id')->primary();
-			$table->string('location')->nullable();
+			$table->string('name')->nullable();
 			$table->timestamps();
 		});
 	}

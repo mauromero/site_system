@@ -25,3 +25,6 @@ Route::get('/customers/{customer}', 'CustomerController@show');
 // Facilites
 Route::get('/facilities', 'FacilityController@index');
 Route::get('/facilities/{facility}', 'FacilityController@details');
+
+// Assessments
+Route::post('/assessments', 'AssessmentController@store');
