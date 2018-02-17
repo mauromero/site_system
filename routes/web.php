@@ -16,7 +16,7 @@ Auth::routes();
 Route::get('/','HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/forms/assessments', 'AssessmentController@index');
+//Route::get('/forms/assessments', 'AssessmentController@index');
 
 // Customers
 Route::get('/customers', 'CustomerController@index')->name('customers');
@@ -28,3 +28,4 @@ Route::get('/facilities/{facility}', 'FacilityController@details');
 
 // Assessments
 Route::post('/assessments', 'AssessmentController@store');
+Route::get('/assessments', 'AssessmentController@create');

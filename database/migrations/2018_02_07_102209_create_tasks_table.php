@@ -15,11 +15,8 @@ class CreateTasksTable extends Migration {
 		Schema::create('tasks', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('assessment_id')->unsigned()->index('fk_tasks_assessment1_idx');
+			$table->integer('assessment_id')->unsigned()->index('fk_tasks_assessment_idx');
 			$table->string('name')->nullable();
-			$table->integer('task_number')->nullable();
-			$table->string('hazards', 500)->nullable();
-			$table->string('measures', 500)->nullable();
 			$table->timestamps();
 		});
 	}

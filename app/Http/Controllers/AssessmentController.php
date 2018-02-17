@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Hazard;
 use App\KitLocation;
-use App\Facility;
+use App\MedicalFacility;
 use App\Assessment;
 
 class AssessmentController extends Controller
@@ -21,20 +21,19 @@ class AssessmentController extends Controller
      */
     public function index()
     {
-        $hazards = Hazard::all();
-        $kit_locations = KitLocation::all();
-        $facilities = Facility::all();
-        return view('forms.assessments', compact('hazards','kit_locations', 'facilities') );
+
     }
 
-    /**
+    /** 
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $hazards = Hazard::all();
+        $med_facilities = MedicalFacility::all();
+        return view('forms.assessments', compact('hazards', 'med_facilities') );
     }
 
     /**
@@ -45,21 +44,24 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
+        // dd(request()->all());
          Assessment::create(request([
-            "job_number",
-            "start_date",
-            "exp_date",
-            "location" ,
-            "gps_n",
-            "gps_w",
-            "usa_ticket",
-            "emergency_phone",
-            "kit_location_id",
-            "med_facility_id",
-            "water_sources",
-
+            'job_number'=> request('job_number'),
+            'start_date'=> request('start_date'),
+            'exp_date'=> request('exp_date'),
+            'location' => request('location'),
+            'gps_n'=> request('gps_n'),
+            'gps_w'=> request('gps_w'),
+            'usa_ticket'=> request('usa_ticket'),
+            'emergency_phone'=> request('emergency_phone'),
+            'kit_location_id'=> request('kit_location_id'),
+            'med_facility_id'=> request('med_facility_id'),
+            'water_sources'=> request('water_sources'),
+            'bleed_off'=> request('bleed_off'),
+            'cutting'=> request('cutting'),
+            'test_hole'=> request('test_hole')
          ]));
-         return redirect("/");
+         return redirect('/');
     }
 
     /**
