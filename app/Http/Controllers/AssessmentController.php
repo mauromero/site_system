@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Hazard;
 use App\KitLocation;
 use App\MedicalFacility;
 use App\Assessment;
+use App\Customer;
+use App\Task;
 
 class AssessmentController extends Controller
 {
@@ -31,9 +35,8 @@ class AssessmentController extends Controller
      */
     public function create()
     {
-        $hazards = Hazard::all();
-        $med_facilities = MedicalFacility::all();
-        return view('forms.assessments', compact('hazards', 'med_facilities') );
+        $customers = Customer::orderBy('name', 'asc')->get();
+        return view('forms.assessments_create', compact('customers') );
     }
 
     /**
@@ -44,8 +47,13 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(request(),[
+            'job_number' => 'required|unique:assessments',
+            'customer_id' => 'required'
+        ]);
         // dd(request()->all());
-         Assessment::create(request([
+         $user_id = auth()->user()->id;
+         Assessment::create([
             'job_number'=> request('job_number'),
             'start_date'=> request('start_date'),
             'exp_date'=> request('exp_date'),
@@ -53,14 +61,18 @@ class AssessmentController extends Controller
             'gps_n'=> request('gps_n'),
             'gps_w'=> request('gps_w'),
             'usa_ticket'=> request('usa_ticket'),
+            'usa_marked'=> request('usa_marked'),
             'emergency_phone'=> request('emergency_phone'),
-            'kit_location_id'=> request('kit_location_id'),
-            'med_facility_id'=> request('med_facility_id'),
+            'kit_location'=> request('kit_location'),
+            'medical_facility_id'=> request('medical_facility_id'),
             'water_sources'=> request('water_sources'),
             'bleed_off'=> request('bleed_off'),
             'cutting'=> request('cutting'),
-            'test_hole'=> request('test_hole')
-         ]));
+            'test_hole'=> request('test_hole'),
+            'user_id'=> $user_id,
+            'customer_id'=> request('customer_id'),
+            'created_at' => Carbon::now()
+         ]);
          return redirect('/');
     }
 
@@ -83,7 +95,15 @@ class AssessmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $assessment = Assessment::find($id);
+        if ($assessment->user_id == auth()->user()->id){
+            $customers = Customer::all();
+            $med_facilities = MedicalFacility::all();
+            return view('forms.assessments_edit', compact('assessment', 'customers', 'med_facilities'));
+        }else{
+            return redirect('/home');
+        }
+        
     }
 
     /**
@@ -95,7 +115,30 @@ class AssessmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(),[
+            'customer_id' => 'required'
+        ]);
+        
+        $assessment = Assessment::find($id);
+        $assessment->start_date = request('start_date');
+        $assessment->exp_date = request('exp_date');
+        $assessment->location = request('location');
+        $assessment->gps_n = request('gps_n');
+        $assessment->gps_n = request('gps_n');
+        $assessment->gps_w = request('gps_w');
+        $assessment->usa_ticket = request('usa_ticket');
+        $assessment->usa_marked = request('usa_marked');
+        $assessment->emergency_phone = request('emergency_phone');
+        $assessment->kit_location = request('kit_location');
+        $assessment->medical_facility_id = request('medical_facility_id');
+        $assessment->water_sources = request('water_sources');
+        $assessment->bleed_off = request('bleed_off');
+        $assessment->cutting = request('cutting');
+        $assessment->test_hole = request('test_hole');
+        $assessment->customer_id = request('customer_id');
+        $assessment->updated_at = Carbon::now();
+        $assessment->save();
+         return redirect('/users/forms');
     }
 
     /**
@@ -107,5 +150,32 @@ class AssessmentController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function tasks(Assessment $assessment)
+    {
+        $assessment = Assessment::find($assessment->id);
+        if ($assessment->user_id == auth()->user()->id){
+            $tasks = Task::where('assessment_id',$assessment->id)->get();
+            return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks'));
+        }
+    }
+
+    public function tasks_save(Assessment $assessment)
+    {
+        $assessment = Assessment::find($assessment->id);
+
+        $this->validate(request(),[
+            'name' => 'required'
+        ]);
+        
+        
+        $new_task=Task::create([
+            'assessment_id'=> $assessment->id,
+            'name' => request('name'),
+            'updated_at'=> Carbon::now(),
+            'created_at' => Carbon::now()
+         ]);
+         return redirect('/assessments/'.$assessment->id.'/tasks');
     }
 }

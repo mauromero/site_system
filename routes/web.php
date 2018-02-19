@@ -12,6 +12,11 @@
 */
 Auth::routes();
 
+///User
+Route::get('/users/profile', 'ProfileController@show')->name('profile');
+Route::get('/users/forms', 'ProfileController@index')->name('forms');
+
+
 ///Home
 Route::get('/','HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
@@ -29,3 +34,15 @@ Route::get('/facilities/{facility}', 'FacilityController@details');
 // Assessments
 Route::post('/assessments', 'AssessmentController@store');
 Route::get('/assessments', 'AssessmentController@create');
+Route::get('/assessments/edit/{assessment}', 'AssessmentController@edit');
+Route::get('/assessments/{assessment}/tasks/', 'AssessmentController@tasks');
+Route::post('/assessments/{assessment}/tasks/', 'AssessmentController@tasks_save');
+Route::patch('/assessments/edit/{assessment}', 'AssessmentController@update');
+
+// Task
+Route::get('/tasks', 'TaskController@create');
+Route::post('/tasks', 'TaskController@store');
+Route::get('/tasks/edit/{task}', 'TaskController@edit');
+Route::post('/tasks/edit/{task}', 'TaskController@update');
+
+
