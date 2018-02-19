@@ -137,8 +137,9 @@ class AssessmentController extends Controller
         $assessment->test_hole = request('test_hole');
         $assessment->customer_id = request('customer_id');
         $assessment->updated_at = Carbon::now();
-        $assessment->save();
-         return redirect('/users/forms');
+        
+        $assessment->save(); 
+        return redirect('/users/forms');
     }
 
     /**
@@ -176,6 +177,6 @@ class AssessmentController extends Controller
             'updated_at'=> Carbon::now(),
             'created_at' => Carbon::now()
          ]);
-         return redirect('/assessments/'.$assessment->id.'/tasks');
+         return redirect('/assessments'.'/'.$assessment->id.'/tasks');
     }
 }

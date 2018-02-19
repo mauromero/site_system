@@ -60,7 +60,7 @@
                                     @foreach ($tasks as $task)
                                         <li class="group-list-item">
                                             {{ $task->name }}
-                                            <button type="button" class="btn btn-sm btn-primary">Edit</button>
+                                            <a href ="/hazards_tasks/edit/{{ $task->id }}" class="btn btn-sm btn-primary">Edit</a>
                                         </li>
 
                                     @endforeach

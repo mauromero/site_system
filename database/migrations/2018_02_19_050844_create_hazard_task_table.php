@@ -17,8 +17,8 @@ class CreateHazardTaskTable extends Migration
             $table->increments('id')->unique('hazard_task_UNIQUE');
             $table->integer('task_id');
             $table->integer('hazard_id');
-            $table->string('harzard', 500)->nullable();
-            $table->string('mesure', 500)->nullable();
+            $table->string('hazard', 500)->nullable();
+            $table->string('measure', 500)->nullable();
             $table->timestamps();
         });
     }

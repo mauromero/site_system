@@ -8,7 +8,7 @@ class Task extends Model
         return $this->belongsTo(Assessment::class);
     } 
 
-    public function hazards(){
-        return $this->belongsToMany(Hazard::class);
+    public function hazards_taks(){
+        return $this->belongstoMany(hazard_task::class, 'hazard_id');
     }
 }

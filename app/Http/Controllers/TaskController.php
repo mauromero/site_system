@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Hazard;
+use App\Assessment;
+
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -57,7 +60,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $hazards = Hazard::orderBy('name', 'asc')->get();
+        $assessment = Assessment::find($task->assessment_id);
+        return view('tasks.edit', compact('hazards', 'task', 'assessment'));
     }
 
     /**
@@ -69,8 +74,11 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
-    }
+        $this->validate(request(),[
+            'hazard_id' => 'required'
+        ]);
+
+  }
 
     /**
      * Remove the specified resource from storage.

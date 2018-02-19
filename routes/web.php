@@ -40,9 +40,16 @@ Route::post('/assessments/{assessment}/tasks/', 'AssessmentController@tasks_save
 Route::patch('/assessments/edit/{assessment}', 'AssessmentController@update');
 
 // Task
-Route::get('/tasks', 'TaskController@create');
-Route::post('/tasks', 'TaskController@store');
-Route::get('/tasks/edit/{task}', 'TaskController@edit');
-Route::post('/tasks/edit/{task}', 'TaskController@update');
+// Route::get('/tasks', 'TaskController@create');
+// Route::post('/tasks', 'TaskController@store');
+// Route::get('/tasks/edit/{task}', 'TaskController@edit');
+// Route::post('/tasks/edit/{task}', 'TaskController@update');
+
+
+// Hazard_Task
+Route::get('/hazards_tasks', 'HazardTaskController@create');
+Route::post('/hazards_tasks', 'HazardTaskController@store');
+Route::get('/hazards_tasks/edit/{task}', 'HazardTaskController@create');
+Route::post('/hazards_tasks/edit/{task}', 'HazardTaskController@update');
 
 
