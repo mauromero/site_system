@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="col-sm-12">
 
-                            <div class="well" >
+                            <div class="well well-sm" >
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
@@ -56,15 +56,55 @@
                             <hr>
 
                             <div>
-                                <ul class="group-list">
-                                    @foreach ($tasks as $task)
-                                        <li class="group-list-item">
-                                            {{ $task->name }}
-                                            <a href ="/hazards_tasks/edit/{{ $task->id }}" class="btn btn-sm btn-primary">Edit</a>
-                                        </li>
+                            <div class="table-responsive">    
+                            <table class="table table-sm">
+                                      @foreach ($tasks as $task)
+                                        <tr class="table-success"> 
+                                            <td class="table-success">
+                                                
+                                            <div class="col-sm-6">
+                                                <h4> <a href ="/hazards_tasks/edit/{{ $task->id }}" >{{ $task->name }}</h4></a>
+                                            </div>
+                                            <div class="col-sm-6 pull-right">
+                                                <a href ="/hazards_tasks/edit/{{ $task->id }}" class="btn btn-sm btn-primary pull-right">Edit</a>
+                                            </div>  
 
-                                    @endforeach
-                                </ul>    
+                                            </td>  
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                
+                                                <table class="table table-striped table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                        <th scope="col">Hazard</th>
+                                                        <th scope="col">Description</th>
+                                                        <th scope="col">Measure</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>              
+                                                      
+                                                    @foreach ($tasks_hazards as $hazard)
+                                                    @if($hazard->task_id == $task->id)
+                                                    <tr>
+                                                    <td>{{ $hazards->find($hazard->hazard_id)->name }}</td>
+                                                    <td>{{ $hazard->hazard }}</td>
+                                                    <td>{{ $hazard->measure }}</td>
+                                                    </tr>
+                                                    @endif
+                                                    @endforeach
+                                                       
+                                                    </tbody>
+                                                </table>
+                                                
+                                            </td>        
+                                                 
+
+                                        </tr>       
+
+                                        @endforeach
+                                    </table>
+                                    </div>    
                             </div>    
 
                         </div>

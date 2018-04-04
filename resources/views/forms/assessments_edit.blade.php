@@ -33,7 +33,7 @@
 
                         <div class="col-sm-12">
 
-                            <div class="well" >
+                           <div class="well well-sm" >
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>

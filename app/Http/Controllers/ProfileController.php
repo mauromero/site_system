@@ -15,7 +15,7 @@ class ProfileController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $assessments = Assessment::where('user_id', $user_id)->get();
+        $assessments = Assessment::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
         return view('assessments.index', compact('assessments'));
 
 

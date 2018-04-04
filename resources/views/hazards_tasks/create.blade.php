@@ -7,10 +7,31 @@
     <div class="row">
 
         <div class="col-md-8 col-md-offset-2">
+
+        <ul class="nav nav-pills pull-right">
+            <li class="nav-item list-group-item-info">
+                    <a class="nav-link" href="/assessments/edit/{{ $assessment->id }}">Assesment Form</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link success" href="/assessments/{{ $task->assessment_id }}/tasks">Tasks</a>
+                </li>
+            </ul>
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/users/forms">My Forms</a></li>
+                    <li class="breadcrumb-item"><a href="/assessments/{{ $task->assessment_id }}/tasks">#{{ $assessment->job_number }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Task</li>
+                </ol>
+                </nav>
+        
             <div class="panel panel-default">
-                <div class="panel-heading">Tasks: {{ $task->name }}</div>
+                <div class="panel-heading">
+                    {{ $task->name  }} 
+                  </div>
 
                 <div class="panel-body">
+                
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
@@ -22,19 +43,12 @@
                     <div class="row">
 
                         <div class="col-sm-12">
+                            
 <!-- FORM -->
                             <form method="POST" action="/hazards_tasks/">
                                 {{ csrf_field() }}
 
                                 <input name="task_id" type="hidden" value="{{ $task->id }}">
-                                
-
-                                    <div class="row" >
-                                        <div class="col-sm-8">
-                                            <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ \Carbon\Carbon::now()->format('m/d/Y')}}</p>
-                                            <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}  </p>
-                                        </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <label for="hazard_id">Select Hazard Type</label>
@@ -67,8 +81,8 @@
                         @if($tasks_hazards)
                         <div class="col-sm-12">
 
-                             <table class="table">
-                                <thead class="thead-dark">
+                             <table class="table table-striped">
+                                <thead>
                                     <tr>
                                     <th scope="col">Hazard</th>
                                     <th scope="col">Description</th>
@@ -78,7 +92,7 @@
                                 <tbody>              
                                     @foreach ($tasks_hazards as $hazard)
                                     <tr>
-                                    <td>{{ $hazard->hazards->name }}</td>
+                                    <th  scope="row">{{ $hazards->find($hazard->hazard_id)->name }}</th>
                                     <td>{{ $hazard->hazard }}</td>
                                     <td>{{ $hazard->measure }}</td>
                                     </tr>

@@ -6,14 +6,31 @@
     <h1>My Forms</h1>
             <div class="list-group">
 
-                @foreach($assessments as $assessment)
-                <a href="/assessments/edit/{{ $assessment->id }}" class="list-group-item list-group-item-action"> {{ $assessment->job_number }}  
-                    &nbsp;{{ $assessment->created_at}}
-                    &nbsp;{{ $assessment->customer->name}}
-                    &nbsp;{{ $assessment->customer->last_name}}
-             </a>
-                @endforeach
-
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                        <th scope="col">Job #</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($assessments as $assessment)
+                    
+                        <tr>
+                        <th scope="row">
+                            <a href="/assessments/edit/{{ $assessment->id }}" > 
+                                {{ $assessment->job_number}}
+                            </a> 
+                        </th>
+                        
+                        <td>{{ $assessment->customer->name}}&nbsp;{{ $assessment->customer->last_name}}</td>
+                        <td>{{ $assessment->created_at->toFormattedDateString() }}</td>
+                        </tr>
+                       
+                    @endforeach    
+                    </tbody>
+                    </table>
         </div>      
     </div>      
 </div>      

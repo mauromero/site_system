@@ -11,6 +11,7 @@ use App\MedicalFacility;
 use App\Assessment;
 use App\Customer;
 use App\Task;
+use App\hazard_task;
 
 class AssessmentController extends Controller
 {
@@ -157,8 +158,10 @@ class AssessmentController extends Controller
     {
         $assessment = Assessment::find($assessment->id);
         if ($assessment->user_id == auth()->user()->id){
-            $tasks = Task::where('assessment_id',$assessment->id)->get();
-            return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks'));
+            $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+            $hazards = Hazard::orderBy('name', 'asc')->get();
+            $tasks_hazards = hazard_task::all();
+            return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
         }
     }
 
