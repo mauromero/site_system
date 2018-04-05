@@ -20,7 +20,7 @@
 
                         <div class="col-sm-12">
 
-                            <form method="POST" action="/assessments">
+                            <form method="POST" action="/locations" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
                                 <div class="row" >
@@ -45,6 +45,11 @@
                                             <option value="{{ $customer->id }}">{{$customer->name}}&nbsp;{{$customer->last_name}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <label for="location">Upload location</label>
+                                    <input type="file" name="location"></input> 
                                 </div>
 
                                 <button type="submit" class="btn btn-success pull-right">Continue</button>

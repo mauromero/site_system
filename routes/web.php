@@ -39,6 +39,11 @@ Route::get('/assessments/{assessment}/tasks/', 'AssessmentController@tasks');
 Route::post('/assessments/{assessment}/tasks/', 'AssessmentController@tasks_save');
 Route::patch('/assessments/edit/{assessment}', 'AssessmentController@update');
 
+//locations files
+Route::post('/locations',function(){
+    request()->file('location')->store('locations', 'locations');
+    return back();    
+});
 // Task
 // Route::get('/tasks', 'TaskController@create');
 // Route::post('/tasks', 'TaskController@store');
