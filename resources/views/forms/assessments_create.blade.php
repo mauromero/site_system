@@ -20,7 +20,7 @@
 
                         <div class="col-sm-12">
 
-                            <form method="POST" action="/locations" enctype="multipart/form-data">
+                            <form method="POST" action="/assessments" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
                                 <div class="row" >
@@ -48,8 +48,8 @@
                                 </div>
                                
                                 <div class="form-group">
-                                    <label for="location">Upload location</label>
-                                    <input type="file" name="location"></input> 
+                                    <label for="location_img">Upload location</label>
+                                    <input type="file" name="location_img"></input> 
                                 </div>
 
                                 <button type="submit" class="btn btn-success pull-right">Continue</button>

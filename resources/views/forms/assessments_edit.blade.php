@@ -7,6 +7,7 @@
     <div class="row">
 
         <div class="col-md-8 col-md-offset-2">
+        <img src="/storage/locations/{{ $assessment->image_name}}">
 
         <ul class="nav nav-pills pull-right">
                 <li class="nav-item active">

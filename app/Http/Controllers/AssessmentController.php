@@ -12,6 +12,7 @@ use App\Assessment;
 use App\Customer;
 use App\Task;
 use App\hazard_task;
+use Illuminate\Support\Facades\Storage;
 
 class AssessmentController extends Controller
 {
@@ -48,11 +49,16 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(),[
-            'job_number' => 'required|unique:assessments',
-            'customer_id' => 'required'
-        ]);
+        // $this->validate(request(),[
+        //     'job_number' => 'required|unique:assessments',
+        //     'customer_id' => 'required'
+        // ]);
+
         // dd(request()->all());
+        request()->file('location_img')->store('locations', 'locations');
+        // $file = request()->file('location');
+        // Storage::putFile('locations', $request->file('location_img'));
+        $file_name = $request->file('location_img')->hashName();
          $user_id = auth()->user()->id;
          Assessment::create([
             'job_number'=> request('job_number'),
@@ -61,6 +67,7 @@ class AssessmentController extends Controller
             'location' => request('location'),
             'gps_n'=> request('gps_n'),
             'gps_w'=> request('gps_w'),
+            'image_name' => $file_name,
             'usa_ticket'=> request('usa_ticket'),
             'usa_marked'=> request('usa_marked'),
             'emergency_phone'=> request('emergency_phone'),

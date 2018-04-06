@@ -18,12 +18,12 @@ class CreateAssessmentsTable extends Migration {
 			$table->dateTime('exp_date')->nullable();
 			$table->dateTime('start_date')->nullable();
 			$table->string('location', 255)->nullable();
-			$table->string('job_number', 45)->unique('job_number_UNIQUE');
+			$table->string('job_number', 45)->unique('job_number_UNIQUE')->nullable();
 			$table->integer('medical_facility_id')->nullable();
 			$table->string('emergency_phone', 45)->nullable();
 			$table->string('gps_n', 45)->nullable();
 			$table->string('gps_w', 45)->nullable();
-			$table->integer('customer_id')->index('fk_assessment_customers_idx');
+			$table->integer('customer_id')->index('fk_assessment_customers_idx')->nullable();
 			$table->string('usa_ticket', 45)->nullable();
 			$table->string('usa_marked', 45)->nullable();
 			$table->string('kit_location', 255)->nullable();
