@@ -2,26 +2,27 @@
 
 @section('content')
 <div class="container">
+<ul class="nav nav-pills pull-right">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Assesment Form</a>
+            </li>
+            <li class="nav-item list-group-item-info">
+                <a class="nav-link success" href="/assessments/{{ $assessment->id }}/tasks">Tasks</a>
+            </li>
+        </ul>
+<div class="row">
 
+    <div class="col-md-8 col-md-offset-2">
+        
 
-    <div class="row">
+        <div class="col-md-12 ">
+            <img class="img-fluid" alt="location image" src="/storage/locations/{{ $assessment->image_name}}"> 
+        </div>
 
-        <div class="col-md-8 col-md-offset-2">
-        <img src="/storage/locations/{{ $assessment->image_name}}">
+            <div class="card border-info  mt-3 mb-3 ">
+                <div class="card-header border-info text-white bg-info">#{{ $assessment->job_number }}</div>
 
-        <ul class="nav nav-pills pull-right">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Assesment Form</a>
-                </li>
-                <li class="nav-item list-group-item-info">
-                    <a class="nav-link success" href="/assessments/{{ $assessment->id }}/tasks">Tasks</a>
-                </li>
-            </ul>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">#{{ $assessment->job_number }}</div>
-
-                <div class="panel-body">
+                <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
