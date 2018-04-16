@@ -38,7 +38,7 @@ class AssessmentController extends Controller
     public function create()
     {
         $customers = Customer::orderBy('name', 'asc')->get();
-        return view('forms.assessments_create', compact('customers') );
+        return view('forms.assessments.assessments_create', compact('customers') );
     }
 
     /**
@@ -47,6 +47,7 @@ class AssessmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {
         // $this->validate(request(),[
@@ -107,7 +108,7 @@ class AssessmentController extends Controller
         if ($assessment->user_id == auth()->user()->id){
             $customers = Customer::all();
             $med_facilities = MedicalFacility::all();
-            return view('forms.assessments_edit', compact('assessment', 'customers', 'med_facilities'));
+            return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'med_facilities'));
         }else{
             return redirect('/home');
         }

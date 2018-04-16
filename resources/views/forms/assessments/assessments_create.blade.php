@@ -3,11 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Assessments Form</div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">Assessments Form</div>
 
-                <div class="panel-body">
+                <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
@@ -49,10 +49,11 @@
                                
                                 <div class="form-group">
                                     <label for="location_img">Upload location</label>
-                                    <input type="file" name="location_img"></input> 
+                                    <input type="file" id="location_img" name="location_img"  class="form-control-file"></input> 
                                 </div>
-
-                                <button type="submit" class="btn btn-success pull-right">Continue</button>
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-success">Continue</button>
+                                </div>
                                 </form>
                         </div>
                     </div>
