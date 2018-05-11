@@ -50,25 +50,15 @@ class AssessmentController extends Controller
     
     public function store(Request $request)
     {
-        // $this->validate(request(),[
-        //     'job_number' => 'required|unique:assessments',
-        //     'customer_id' => 'required'
-        // ]);
-
-        // dd(request()->all());
-        request()->file('location_img')->store('locations', 'locations');
-        // $file = request()->file('location');
-        // Storage::putFile('locations', $request->file('location_img'));
-        $file_name = $request->file('location_img')->hashName();
+        
          $user_id = auth()->user()->id;
-         Assessment::create([
+         $newAssessment = Assessment::create([
             'job_number'=> request('job_number'),
             'start_date'=> request('start_date'),
             'exp_date'=> request('exp_date'),
             'location' => request('location'),
             'gps_n'=> request('gps_n'),
             'gps_w'=> request('gps_w'),
-            'image_name' => $file_name,
             'usa_ticket'=> request('usa_ticket'),
             'usa_marked'=> request('usa_marked'),
             'emergency_phone'=> request('emergency_phone'),
@@ -82,7 +72,8 @@ class AssessmentController extends Controller
             'customer_id'=> request('customer_id'),
             'created_at' => Carbon::now()
          ]);
-         return redirect('/');
+  
+         return redirect('/assessments/edit/'.$newAssessment->id);
     }
 
     /**
@@ -124,12 +115,13 @@ class AssessmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate(request(),[
-            'customer_id' => 'required'
-        ]);
+        // $this->validate(request(),[
+        //     'customer_id' => 'required'
+        // ]);
         
         $assessment = Assessment::find($id);
         $assessment->start_date = request('start_date');
+        $assessment->job_number = request('job_number');
         $assessment->exp_date = request('exp_date');
         $assessment->location = request('location');
         $assessment->gps_n = request('gps_n');
@@ -190,4 +182,32 @@ class AssessmentController extends Controller
          ]);
          return redirect('/assessments'.'/'.$assessment->id.'/tasks');
     }
+
+    public function image_show($id){
+        $assessment = Assessment::find($id);
+        if ($assessment->user_id == auth()->user()->id){
+            return view('forms.assessments.assessments_image', compact('assessment'));
+        }else{
+            return redirect('/home');
+        }
+    }
+
+    public function image_store(Request $request, $id){
+ 
+        $assessment = Assessment::find($id);
+        $file_name = $request->file('location_img')->hashName();
+        if ($assessment->user_id == auth()->user()->id){
+            request()->file('location_img')->store('locations', 'locations');
+            $assessment = Assessment::find($id);
+            $assessment->image_name = $file_name;
+            $assessment->updated_at = Carbon::now();
+            $assessment->save(); 
+            // dd($assessment->image_name);
+
+            return view('forms.assessments.assessments_image', compact('assessment'));
+        }else{
+            return redirect('/home');
+        }
+    }
+
 }

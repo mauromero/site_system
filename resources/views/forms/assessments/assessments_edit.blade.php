@@ -13,8 +13,9 @@
     <div class="row">
     <div class="col-sm-12"> 
         <nav class="nav nav-tabs">
-            <a class="nav-item nav-link border-primary text-white bg-primary" href="#">Assesment Form</a>
+            <a class="nav-item nav-link border-primary text-white bg-primary" href="#">Form</a>
             <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/tasks">Tasks</a>
+            <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/image">Image</a>
         </nav>
 
             <div class="card">
@@ -24,22 +25,14 @@
                         <div class="card-body">
                         <div class="row">
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
                                 <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}  </p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="font-weight-bold"><label> Job Number:&nbsp;</label>{{ $assessment->job_number }} </p>
-                                <p class="font-weight-bold"><label> Customer:&nbsp;</label>{{ $assessment->customer->name }}&nbsp;{{ $assessment->customer->last_name }} </p>
                             </div>
 
                         </div>
                         </div>
                     </div>
-
-                    <div class="text-center">
-                        <img class="img-fluid rounded" alt="location image" src="/storage/locations/{{ $assessment->image_name}}"> 
-                    </div>  
 
                         <form method="POST" action="/assessments/edit/{{ $assessment->id }}">
                             {{ csrf_field() }}
@@ -47,8 +40,15 @@
 
                             <div class="form-row">
 
-                                <div class="form-group col-sm-12">
-                                    <label for="customer_id">Select Custormer</label>
+                             <div class="form-group col-sm-4">
+                                        <label for="job_number">Job Number</label>
+                                        <div>
+                                            <input type="text" class="form-control" id="job_number" name="job_number"  placeholder="#"  value="{{ $assessment->job_number }}" >
+                                        </div>
+                                    </div>
+
+                                <div class="form-group col-sm-8">
+                                    <label for="customer_id">Custormer</label>
                                     <select class="form-control" id="customer_id"  name="customer_id">
                                         <option value="">---</option>
                                         @foreach ($customers as $customer) 

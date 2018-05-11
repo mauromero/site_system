@@ -14,8 +14,9 @@
         <div class="col-md-12">
 
         <nav class="nav nav-tabs">
-            <a class="nav-item nav-link border-primary" href="/assessments/edit/{{ $assessment->id }}">Assesment Form</a>
+            <a class="nav-item nav-link border-primary" href="/assessments/edit/{{ $assessment->id }}">Form</a>
             <a class="nav-item nav-link border-primary text-white bg-primary" href="#">Tasks</a>
+            <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/image">Image</a>
         </nav>        
 
 
@@ -88,16 +89,13 @@
                                                     </tbody>
                                                 </table>
                                                 
-                                            </td>        
-                                                 
-
+                                            </td>                                                    
                                         </tr>       
 
                                         @endforeach
                             </table>
-                            </div>    
-                            </div>    
-
+                        </div>    
+                    </div>    
 
                 </div>
             </div>

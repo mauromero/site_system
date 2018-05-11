@@ -18,8 +18,9 @@ Route::get('/users/forms', 'ProfileController@index')->name('forms');
 
 
 ///Home
-Route::get('/','HomeController@welcome')->name('welcome');
+// Route::get('/','HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 //Route::get('/forms/assessments', 'AssessmentController@index');
 
@@ -38,6 +39,9 @@ Route::get('/assessments/edit/{assessment}', 'AssessmentController@edit');
 Route::get('/assessments/{assessment}/tasks/', 'AssessmentController@tasks');
 Route::post('/assessments/{assessment}/tasks/', 'AssessmentController@tasks_save');
 Route::patch('/assessments/edit/{assessment}', 'AssessmentController@update');
+Route::patch('/assessments/{assessment}/image', 'AssessmentController@image_store');
+Route::get('/assessments/{assessment}/image', 'AssessmentController@image_show');
+
 
 //locations files
 // Route::post('/locations',function(){

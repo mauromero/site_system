@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <h2 class="text-center">Assessments</h2>
-                            <p class="text-center">Information about this type of form. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+                            <p class="text-center">Select this form to create a new assessment.</p>
                             <p class="text-center"><a class="btn btn-success" href="/assessments" role="button">Form &raquo;</a></p>
                         </div>
                         <div class="col-lg-4">

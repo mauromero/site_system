@@ -27,8 +27,18 @@
                                 </a> 
                             </th>
                             
-                            <td>{{ $assessment->customer->name}}&nbsp;{{ $assessment->customer->last_name}}</td>
-                            <td>{{ $assessment->created_at->toFormattedDateString() }}</td>
+                            <td>
+                                @if ($assessment->customer)
+                                <a href="/assessments/edit/{{ $assessment->id }}" >
+                                    {{ $assessment->customer->name}}&nbsp;{{ $assessment->customer->last_name}}
+                                </a> 
+                                @endif
+                            </td>
+                                   
+                            <td>
+                                <a href="/assessments/edit/{{ $assessment->id }}" >
+                                {{ $assessment->created_at->toFormattedDateString() }}</td>
+                                </a>
                             </tr>
                             
                         @endforeach    
