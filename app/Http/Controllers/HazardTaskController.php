@@ -44,7 +44,7 @@ class HazardTaskController extends Controller
             'updated_at' => Carbon::now()
         ]);
  
-        return redirect('/hazards_tasks/edit/'.$task_id);
+        return redirect('/tasks/edit/'.$task_id);
     }
 
     /**
@@ -55,7 +55,7 @@ class HazardTaskController extends Controller
      */
     public function show(hazard_task $hazard_task)
     {
-        //
+        
     }
 
     /**
@@ -64,9 +64,13 @@ class HazardTaskController extends Controller
      * @param  \App\hazard_task  $hazard_task
      * @return \Illuminate\Http\Response
      */
-    public function edit( Task $task)
+    public function edit(hazard_task $hazard_task)
     {
-
+        $hazards = Hazard::orderBy('name', 'asc')->get();
+        $task = Task::find($hazard_task->task_id);
+        $assessment = Assessment::find($task->assessment_id);
+        
+        return view('hazards_tasks.edit', compact('assessment','task','hazard_task','hazards'));
     }
 
     /**
@@ -76,9 +80,25 @@ class HazardTaskController extends Controller
      * @param  \App\hazard_task  $hazard_task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, hazard_task $hazard_task)
+    public function update(Request $request, $id)
     {
+        $hazard_task = hazard_task::find($id);
+        $hazard_task->hazard_id = request('hazard_id');
+        $hazard_task->hazard = request('hazard');
+        $hazard_task->measure = request('measure');
+        $hazard_task->updated_at = Carbon::now();
+        $hazard_task->save(); 
+        return redirect('/tasks/edit/'.$request->task_id);
         
+    }
+
+    public function delete(hazard_task $hazard_task)
+    {
+        $hazards = Hazard::orderBy('name', 'asc')->get();
+        $task = Task::find($hazard_task->task_id);
+        $assessment = Assessment::find($task->assessment_id);
+        
+        return view('hazards_tasks.delete', compact('assessment','task','hazard_task','hazards'));
     }
 
     /**
@@ -89,6 +109,8 @@ class HazardTaskController extends Controller
      */
     public function destroy(hazard_task $hazard_task)
     {
-        //
+        $hazardTask = hazard_task::find($hazard_task->id);
+        $hazardTask->delete();
+        return redirect('/tasks/edit/'.$hazard_task->task_id);
     }
 }

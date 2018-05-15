@@ -50,7 +50,6 @@ class AssessmentController extends Controller
     
     public function store(Request $request)
     {
-        
          $user_id = auth()->user()->id;
          $newAssessment = Assessment::create([
             'job_number'=> request('job_number'),
@@ -96,14 +95,13 @@ class AssessmentController extends Controller
     public function edit($id)
     {
         $assessment = Assessment::find($id);
-        if ($assessment->user_id == auth()->user()->id){
+        if (auth()->user() && $assessment->user_id == auth()->user()->id){
             $customers = Customer::all();
             $med_facilities = MedicalFacility::all();
             return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'med_facilities'));
         }else{
             return redirect('/home');
-        }
-        
+        }      
     }
 
     /**
@@ -138,7 +136,6 @@ class AssessmentController extends Controller
         $assessment->test_hole = request('test_hole');
         $assessment->customer_id = request('customer_id');
         $assessment->updated_at = Carbon::now();
-        
         $assessment->save(); 
         return redirect('/users/forms');
     }
@@ -202,8 +199,6 @@ class AssessmentController extends Controller
             $assessment->image_name = $file_name;
             $assessment->updated_at = Carbon::now();
             $assessment->save(); 
-            // dd($assessment->image_name);
-
             return view('forms.assessments.assessments_image', compact('assessment'));
         }else{
             return redirect('/home');

@@ -36,12 +36,11 @@ Route::get('/facilities/{facility}', 'FacilityController@details');
 Route::post('/assessments', 'AssessmentController@store');
 Route::get('/assessments', 'AssessmentController@create');
 Route::get('/assessments/edit/{assessment}', 'AssessmentController@edit');
-Route::get('/assessments/{assessment}/tasks/', 'AssessmentController@tasks');
+Route::get('/assessments/{assessment}/tasks/', 'TaskController@index');
 Route::post('/assessments/{assessment}/tasks/', 'AssessmentController@tasks_save');
 Route::patch('/assessments/edit/{assessment}', 'AssessmentController@update');
 Route::patch('/assessments/{assessment}/image', 'AssessmentController@image_store');
 Route::get('/assessments/{assessment}/image', 'AssessmentController@image_show');
-
 
 //locations files
 // Route::post('/locations',function(){
@@ -50,16 +49,18 @@ Route::get('/assessments/{assessment}/image', 'AssessmentController@image_show')
 // });
 
 // Task
-// Route::get('/tasks', 'TaskController@create');
-// Route::post('/tasks', 'TaskController@store');
-// Route::get('/tasks/edit/{task}', 'TaskController@edit');
-// Route::post('/tasks/edit/{task}', 'TaskController@update');
-
+Route::get('/tasks', 'TaskController@create');
+Route::post('/tasks', 'TaskController@store');
+Route::get('/tasks/edit/{task}', 'TaskController@edit');
+Route::post('/tasks/edit/{task}', 'TaskController@update');
+Route::patch('/tasks/rename/{task}', 'TaskController@rename');
+Route::get('/tasks/delete/{task}', 'TaskController@delete');
+Route::delete('/tasks/delete/{task}', 'TaskController@destroy');
 
 // Hazard_Task
 Route::get('/hazards_tasks', 'HazardTaskController@create');
 Route::post('/hazards_tasks', 'HazardTaskController@store');
-Route::get('/hazards_tasks/edit/{task}', 'HazardTaskController@create');
-Route::post('/hazards_tasks/edit/{task}', 'HazardTaskController@update');
-
-
+Route::patch('/hazards_tasks/edit/{hazard_task}', 'HazardTaskController@update');
+Route::get('/hazards_tasks/edit/{hazard_task}', 'HazardTaskController@edit');
+Route::get('/hazards_tasks/delete/{hazard_task}', 'HazardTaskController@delete');
+Route::delete('/hazards_tasks/delete/{hazard_task}', 'HazardTaskController@destroy');

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header bg-primary text-white">Dashboard</div>
 
                 <div class="card-body">
                     @if (session('status'))
