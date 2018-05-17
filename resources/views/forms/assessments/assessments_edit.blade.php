@@ -65,14 +65,14 @@
                                 <div class="form-group col-sm-6">
                                     <label for="start_date">Start Date</label>
                                     <div>
-                                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ \Carbon\Carbon::parse($assessment->start_date)->format('m/d/Y') }}" >
+                                        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ \Carbon\Carbon::parse($assessment->start_date)->toDateString()}}" >
                                     </div>
                                 </div>  
 
                                 <div class="form-group col-sm-6">
                                     <label for="exp_date">Exp. Date</label>
                                     <div>
-                                        <input type="date" class="form-control" id="exp_date" name="exp_date" value="{{ $assessment->exp_date }}"  placeholder="Number" >
+                                        <input type="date" class="form-control" id="exp_date" name="exp_date" value="{{ \Carbon\Carbon::parse($assessment->exp_date)->toDateString()}}">
                                     </div>
                                 </div> 
 

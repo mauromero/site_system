@@ -126,10 +126,10 @@ class AssessmentController extends Controller
     public function update(Request $request, $id)
     {
         if(auth()->user()){
-            $this->validate(request(),[
-                'job_number' => 'unique:assessments'
-            ]);
             $assessment = Assessment::find($id);
+            $this->validate(request(),[
+                'job_number' => 'unique:assessments,job_number,'.$assessment->id
+            ]);
             if ( $assessment->user_id == auth()->user()->id){
                 $assessment = Assessment::find($id);
                 $assessment->start_date = request('start_date');
