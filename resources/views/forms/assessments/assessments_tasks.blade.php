@@ -19,7 +19,7 @@
             <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/image">Image</a>
         </nav>        
 
-
+<!-- FORM -->
             <div class="card">
                 <div class="card-body">
 
@@ -40,20 +40,21 @@
                         </div>            
                     </div>            
             <hr>
-
+<!-- TABLE -->
+                    
                     <div>
                         @foreach ($tasks as $task)
                             <div class="card  border-primary mb-3">
-                                <div class="card-header bg-light border-primary">     
+                                <div class="card-header bg-primary text-white border-primary">     
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <h5> {{ $task->name }} </h5>
+                                                {{ $task->name }} 
                                             </div>
                                         </div>
                                     </div>
 
                                 <div class="card-body">
-
+                                @if(!$tasks_hazards->isEmpty())
                                     <table class="table table-striped table-sm">
                                         <thead>
                                             <tr>
@@ -74,6 +75,7 @@
                                         @endforeach
                                         </tbody>
                                     </table>
+                                @endif    
 
                                 </div>  
                                 <div class="card-footer">

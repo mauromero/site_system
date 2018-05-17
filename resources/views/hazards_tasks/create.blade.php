@@ -1,4 +1,4 @@
-@extends('layouts.app')
+<!-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -27,28 +27,30 @@
                 </h4>
 
                 <div class="card bg-light">
-                    <div class="card-body ">                                           
+                    <div class="card-body ">                                            -->
 <!-- FORM -->
-                        <form method="POST" action="/hazards_tasks/">
+                        <!-- <form method="POST" action="/hazards_tasks/">
                         {{ csrf_field() }}
 
                         <input name="task_id" type="hidden" value="{{ $task->id }}">
 
-                            <div class="form-group">
-                                <label for="hazard_id">Select Hazard Type</label>
-                                <select class="form-control" id="hazard_id"  name="hazard_id">
-                                    <option value="">---</option>
-                                    @foreach ($hazards as $hazard) 
-                                        <option value="{{ $hazard->id }}">{{ $hazard->name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label" for="hazard_id">Select Hazard Type</label>
+                                <div class="col-sm-8">
+                                    <select id="hazard_id"  name="hazard_id">
+                                        <option value="">---</option>
+                                        @foreach ($hazards as $hazard) 
+                                            <option value="{{ $hazard->id }}">{{ $hazard->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-
 
                             <div class="form-group">
                                 <label for="hazard">Hazard Description</label>
                                 <textarea class="form-control" id="hazard" name="hazard" rows="2"></textarea>
                             </div>
+
                             <div class="form-group">
                                 <label for="measure">Preventive Measures</label>
                                 <textarea class="form-control" id="measure" name="measure" rows="2"></textarea>
@@ -99,4 +101,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection -->

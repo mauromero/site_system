@@ -94,11 +94,15 @@ class AssessmentController extends Controller
      */
     public function edit($id)
     {
-        $assessment = Assessment::find($id);
-        if (auth()->user() && $assessment->user_id == auth()->user()->id){
-            $customers = Customer::all();
-            $med_facilities = MedicalFacility::all();
-            return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'med_facilities'));
+        if(auth()->user()){
+            $assessment = Assessment::find($id);
+            if ( $assessment->user_id == auth()->user()->id){
+                $customers = Customer::all();
+                $med_facilities = MedicalFacility::all();
+                return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'med_facilities'));
+            }else{
+            return redirect('/home');
+            }  
         }else{
             return redirect('/home');
         }      
@@ -113,31 +117,37 @@ class AssessmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $this->validate(request(),[
-        //     'customer_id' => 'required'
-        // ]);
+        if(auth()->user()){
+            $assessment = Assessment::find($id);
+            if ( $assessment->user_id == auth()->user()->id){
         
-        $assessment = Assessment::find($id);
-        $assessment->start_date = request('start_date');
-        $assessment->job_number = request('job_number');
-        $assessment->exp_date = request('exp_date');
-        $assessment->location = request('location');
-        $assessment->gps_n = request('gps_n');
-        $assessment->gps_n = request('gps_n');
-        $assessment->gps_w = request('gps_w');
-        $assessment->usa_ticket = request('usa_ticket');
-        $assessment->usa_marked = request('usa_marked');
-        $assessment->emergency_phone = request('emergency_phone');
-        $assessment->kit_location = request('kit_location');
-        $assessment->medical_facility_id = request('medical_facility_id');
-        $assessment->water_sources = request('water_sources');
-        $assessment->bleed_off = request('bleed_off');
-        $assessment->cutting = request('cutting');
-        $assessment->test_hole = request('test_hole');
-        $assessment->customer_id = request('customer_id');
-        $assessment->updated_at = Carbon::now();
-        $assessment->save(); 
-        return redirect('/users/forms');
+                $assessment = Assessment::find($id);
+                $assessment->start_date = request('start_date');
+                $assessment->job_number = request('job_number');
+                $assessment->exp_date = request('exp_date');
+                $assessment->location = request('location');
+                $assessment->gps_n = request('gps_n');
+                $assessment->gps_n = request('gps_n');
+                $assessment->gps_w = request('gps_w');
+                $assessment->usa_ticket = request('usa_ticket');
+                $assessment->usa_marked = request('usa_marked');
+                $assessment->emergency_phone = request('emergency_phone');
+                $assessment->kit_location = request('kit_location');
+                $assessment->medical_facility_id = request('medical_facility_id');
+                $assessment->water_sources = request('water_sources');
+                $assessment->bleed_off = request('bleed_off');
+                $assessment->cutting = request('cutting');
+                $assessment->test_hole = request('test_hole');
+                $assessment->customer_id = request('customer_id');
+                $assessment->updated_at = Carbon::now();
+                $assessment->save(); 
+                return redirect('/users/forms');
+            }else{
+                return redirect('/home');
+            }  
+        }else{
+            return redirect('/home');
+        }  
     }
 
     /**
@@ -146,20 +156,58 @@ class AssessmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function delete($id)
+    {
+        if(auth()->user()){
+            $assessment = Assessment::find($id);
+            if ( $assessment->user_id == auth()->user()->id){
+                $customers = Customer::all();
+                $med_facilities = MedicalFacility::all();
+                $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+                $hazards = Hazard::orderBy('name', 'asc')->get();
+                $tasks_hazards = hazard_task::all();
+                return view('forms.assessments.assessments_delete', compact('assessment', 'customers', 'med_facilities', 'tasks', 'hazards', 'tasks_hazards'));
+            }else{
+                return redirect('/home');
+            }  
+        }else{
+            return redirect('/home');
+        }  
+
+    }
+
     public function destroy($id)
     {
-        //
+        if(auth()->user()){
+            $assessment = Assessment::find($id);
+            if ( $assessment->user_id == auth()->user()->id){
+                $assessment->delete();
+                return redirect('/users/forms');
+            }else{
+                return redirect('/home');
+            }  
+        }else{
+            return redirect('/home');
+        }  
     }
     
     public function tasks(Assessment $assessment)
     {
-        $assessment = Assessment::find($assessment->id);
-        if ($assessment->user_id == auth()->user()->id){
-            $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+        if(auth()->user()){
+            $assessment = Assessment::find($id);
+            if ( $assessment->user_id == auth()->user()->id){
+                $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
             $hazards = Hazard::orderBy('name', 'asc')->get();
             $tasks_hazards = hazard_task::all();
             return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
-        }
+            }else{
+                return redirect('/home');
+            }  
+        }else{
+            return redirect('/home');
+        }         
+        
     }
 
     public function tasks_save(Assessment $assessment)

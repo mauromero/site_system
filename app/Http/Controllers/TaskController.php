@@ -20,14 +20,16 @@ class TaskController extends Controller
     public function index(Assessment $assessment)
     {
         if(auth()->user()){
-        $assessment = Assessment::find($assessment->id);
-        if ($assessment->user_id == auth()->user()->id){
-            $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
-            $hazards = Hazard::orderBy('name', 'asc')->get();
-            $tasks_hazards = hazard_task::all();
-            return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
-        }
+            $assessment = Assessment::find($assessment->id);
+            if ($assessment->user_id == auth()->user()->id){
+                $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+                $hazards = Hazard::orderBy('name', 'asc')->get();
+                $tasks_hazards = hazard_task::all();
+                return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
             }else{
+                return redirect('/home');
+            } 
+        }else{
             return redirect('/home');
         }  
     }

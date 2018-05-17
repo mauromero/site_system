@@ -26,7 +26,13 @@ Route::get('/', 'HomeController@index')->name('home');
 
 // Customers
 Route::get('/customers', 'CustomerController@index')->name('customers');
+Route::post('/customers', 'CustomerController@store');
+Route::get('/customers/create', 'CustomerController@create');
 Route::get('/customers/{customer}', 'CustomerController@show');
+Route::get('/customers/edit/{customer}', 'CustomerController@edit');
+Route::patch('/customers/edit/{customer}', 'CustomerController@update');
+Route::get('/customers/delete/{customer}', 'CustomerController@delete');
+Route::delete('/customers/delete/{customer}', 'CustomerController@destroy');
 
 // Facilites
 Route::get('/facilities', 'FacilityController@index');
@@ -41,6 +47,8 @@ Route::post('/assessments/{assessment}/tasks/', 'AssessmentController@tasks_save
 Route::patch('/assessments/edit/{assessment}', 'AssessmentController@update');
 Route::patch('/assessments/{assessment}/image', 'AssessmentController@image_store');
 Route::get('/assessments/{assessment}/image', 'AssessmentController@image_show');
+Route::get('/assessments/delete/{assessment}', 'AssessmentController@delete');
+Route::delete('/assessments/delete/{assessment}', 'AssessmentController@destroy');
 
 //locations files
 // Route::post('/locations',function(){
