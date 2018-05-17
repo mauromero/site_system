@@ -37,8 +37,12 @@ class AssessmentController extends Controller
      */
     public function create()
     {
-        $customers = Customer::orderBy('name', 'asc')->get();
-        return view('forms.assessments.assessments_create', compact('customers') );
+        if( auth()->user() ){
+            $customers = Customer::orderBy('name', 'asc')->get();
+            return view('forms.assessments.assessments_create', compact('customers') );
+        }else{
+            return redirect('/home');
+        }  
     }
 
     /**
@@ -50,6 +54,7 @@ class AssessmentController extends Controller
     
     public function store(Request $request)
     {
+        if( auth()->user() ){
          $user_id = auth()->user()->id;
          $newAssessment = Assessment::create([
             'job_number'=> request('job_number'),
@@ -73,6 +78,9 @@ class AssessmentController extends Controller
          ]);
   
          return redirect('/assessments/edit/'.$newAssessment->id);
+        }else{
+            return redirect('/home');
+        }  
     }
 
     /**
@@ -118,9 +126,11 @@ class AssessmentController extends Controller
     public function update(Request $request, $id)
     {
         if(auth()->user()){
+            $this->validate(request(),[
+                'job_number' => 'unique:assessments'
+            ]);
             $assessment = Assessment::find($id);
             if ( $assessment->user_id == auth()->user()->id){
-        
                 $assessment = Assessment::find($id);
                 $assessment->start_date = request('start_date');
                 $assessment->job_number = request('job_number');
@@ -182,6 +192,7 @@ class AssessmentController extends Controller
         if(auth()->user()){
             $assessment = Assessment::find($id);
             if ( $assessment->user_id == auth()->user()->id){
+                Storage::disk('public')->delete('locations/'.$assessment->image_name);
                 $assessment->delete();
                 return redirect('/users/forms');
             }else{
@@ -198,9 +209,9 @@ class AssessmentController extends Controller
             $assessment = Assessment::find($id);
             if ( $assessment->user_id == auth()->user()->id){
                 $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
-            $hazards = Hazard::orderBy('name', 'asc')->get();
-            $tasks_hazards = hazard_task::all();
-            return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
+                $hazards = Hazard::orderBy('name', 'asc')->get();
+                $tasks_hazards = hazard_task::all();
+                return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
             }else{
                 return redirect('/home');
             }  
@@ -212,45 +223,87 @@ class AssessmentController extends Controller
 
     public function tasks_save(Assessment $assessment)
     {
-        $assessment = Assessment::find($assessment->id);
+        if(auth()->user()){
 
-        $this->validate(request(),[
-            'name' => 'required'
-        ]);
-        
-        
-        $new_task=Task::create([
-            'assessment_id'=> $assessment->id,
-            'name' => request('name'),
-            'updated_at'=> Carbon::now(),
-            'created_at' => Carbon::now()
-         ]);
-         return redirect('/assessments'.'/'.$assessment->id.'/tasks');
+            $this->validate(request(),[
+                'name' => 'required'
+            ]);
+            $assessment = Assessment::find($assessment->id);
+            if ($assessment->user_id == auth()->user()->id){
+                $new_task=Task::create([
+                    'assessment_id'=> $assessment->id,
+                    'name' => request('name'),
+                    'updated_at'=> Carbon::now(),
+                    'created_at' => Carbon::now()
+                    ]);
+                return redirect('/assessments'.'/'.$assessment->id.'/tasks');
+            }else{
+                return redirect('/home');
+            }  
+        }else{
+            return redirect('/home');
+        }  
     }
 
     public function image_show($id){
-        $assessment = Assessment::find($id);
-        if ($assessment->user_id == auth()->user()->id){
-            return view('forms.assessments.assessments_image', compact('assessment'));
+        if(auth()->user()){
+            $assessment = Assessment::find($id);
+            if ($assessment->user_id == auth()->user()->id){
+                return view('forms.assessments.assessments_image', compact('assessment'));
+            }else{
+                return redirect('/home');
+            }
         }else{
             return redirect('/home');
-        }
+        }  
     }
 
-    public function image_store(Request $request, $id){
- 
-        $assessment = Assessment::find($id);
-        $file_name = $request->file('location_img')->hashName();
-        if ($assessment->user_id == auth()->user()->id){
-            request()->file('location_img')->store('locations', 'locations');
-            $assessment = Assessment::find($id);
-            $assessment->image_name = $file_name;
-            $assessment->updated_at = Carbon::now();
-            $assessment->save(); 
-            return view('forms.assessments.assessments_image', compact('assessment'));
+    public function image_store(Request $request, $id)
+    {
+        if(auth()->user()){
+            $this->validate(request(),[
+                'location_img' => 'required'
+            ]);
+                $assessment = Assessment::find($id);
+                if ($assessment->user_id == auth()->user()->id){
+                    if($assessment->image_name){
+                        Storage::disk('public')->delete('locations/'.$assessment->image_name);
+                    }
+
+                    $file_name = $request->file('location_img')->hashName();
+                    request()->file('location_img')->store('locations', 'locations');
+                    $assessment = Assessment::find($id);
+                    $assessment->image_name = $file_name;
+                    $assessment->updated_at = Carbon::now();
+                    $assessment->save(); 
+                    return view('forms.assessments.assessments_image', compact('assessment'));
+                }else{
+                    return redirect('/home');
+            }  
         }else{
             return redirect('/home');
-        }
+        }      
     }
+
+    public function image_delete($id)
+    {
+        if(auth()->user()){
+                $assessment = Assessment::find($id);
+                if ($assessment->user_id == auth()->user()->id){
+                    if($assessment->image_name){
+                        Storage::disk('public')->delete('locations/'.$assessment->image_name);
+                        $assessment->image_name = null;
+                        $assessment->updated_at = Carbon::now();
+                        $assessment->save(); 
+                    }
+                    return view('forms.assessments.assessments_image', compact('assessment'));
+                }else{
+                    return redirect('/home');
+            }  
+        }else{
+            return redirect('/home');
+        }      
+    }
+
 
 }

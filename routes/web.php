@@ -39,8 +39,8 @@ Route::get('/facilities', 'FacilityController@index');
 Route::get('/facilities/{facility}', 'FacilityController@details');
 
 // Assessments
-Route::post('/assessments', 'AssessmentController@store');
 Route::get('/assessments', 'AssessmentController@create');
+Route::post('/assessments', 'AssessmentController@store');
 Route::get('/assessments/edit/{assessment}', 'AssessmentController@edit');
 Route::get('/assessments/{assessment}/tasks/', 'TaskController@index');
 Route::post('/assessments/{assessment}/tasks/', 'AssessmentController@tasks_save');
