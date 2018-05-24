@@ -19,7 +19,8 @@ class CreateAssessmentsTable extends Migration {
 			$table->dateTime('start_date')->nullable();
 			$table->string('location', 255)->nullable();
 			$table->string('job_number', 45)->unique('job_number_UNIQUE')->nullable();
-			$table->integer('medical_facility_id')->nullable();
+			$table->string('medical_facility_name',65)->nullable();
+			$table->string('medical_facility_location',1020)->nullable();
 			$table->string('emergency_phone', 45)->nullable();
 			$table->string('gps_n', 45)->nullable();
 			$table->string('gps_w', 45)->nullable();
@@ -31,7 +32,7 @@ class CreateAssessmentsTable extends Migration {
 			$table->string('bleed_off', 255)->nullable();
 			$table->string('cutting', 255)->nullable();
 			$table->string('test_hole', 255)->nullable();
-			$table->string('image_name', 255)->nullable();
+			$table->string('image_name', 45)->nullable();
 			$table->integer('progress')->default(0);
 			$table->boolean('submitted')->default(false);
 			$table->integer('user_id')->index('fk_assessment_user_idx');

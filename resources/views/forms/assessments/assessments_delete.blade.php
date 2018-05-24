@@ -124,21 +124,19 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-group col-sm-12">
-                                    <label for="medical_facility_id">Nearest Medical Facility</label>
-                                    <select class="form-control" id="medical_facility_id"  name="medical_facility_id">
-                                        <option value="0">---</option>
-                                        @foreach ($med_facilities as $facility) 
-                                            <option value="{{ $facility->id }}" 
-                                                @if($assessment->medical_facility_id == $facility->id)
-                                                    selected
-                                                @endif  
-                                            >{{ $facility->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="medical_facility_name">Nearest medical facility</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="medical_facility_name" name="medical_facility_name" value="{{ $assessment->medical_facility_name }}"  placeholder="Name" >
+                                    </div>
                                 </div>
 
+                                <div class="form-group col-sm-12">
+                                    <label for="medical_facility_location">Medical facility location</label>
+                                    <div>
+                                        <textarea class="form-control" id="medical_facility_location" name="medical_facility_location" rows="3">{{ $assessment->medical_facility_location }}</textarea>
+                                    </div>
+                                </div>
 
                                 <div class="form-group col-sm-12">
                                     <label for="water_services">Water Sources</label>
@@ -174,12 +172,6 @@
                     @if(!$tasks->isEmpty())
 
                         <div>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Alert!&nbsp;</strong>This form has one or more tasks connected with it. Please remove all tasks before deleting the form.
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
 
                             <h5>Tasks</h5>
                             @foreach ($tasks as $task)
@@ -217,13 +209,6 @@
                                     
 
                                     </div>  
-                                    <div class="card-footer">
-                                    <div class="row">
-                                        <div class="col-sm-12 text-right">
-                                                <a href ="/tasks/delete/{{ $task->id }}" class="btn btn-danger btn-sm">Delete</a>
-                                            </div>   
-                                    </div>                           
-                                    </div>  
                                 </div>  
                             @endforeach
                         </div>
@@ -238,11 +223,9 @@
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <div class="form-group row">
-                                @if($tasks->isEmpty())
                                 <div class="col-sm-6 text-left">
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </div>
-                                @endif
                                 <div class="col-sm-6 text-right">
                                 <a href="/users/forms" class="btn btn-primary">My Forms</a>
                                 </div>

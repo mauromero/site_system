@@ -118,17 +118,19 @@
                                     </div>
                                 </div>
 
-
-                                <div class="form-group">
-                                    <label for="medical_facility_id">Nearest Medical Facility</label>
-                                    <select class="form-control" id="medical_facility_id"  name="medical_facility_id">
-                                        <option value="0">---</option>
-                                        @foreach ($med_facilities as $facility) 
-                                            <option value="{{ $facility->id }}">{{ $facility->name}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="form-group col-sm-12">
+                                    <label for="medical_facility_name">Nearest medical facility</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="medical_facility_name" name="medical_facility_name" value="{{ $assessment->medical_facility_name }}"  placeholder="Name" >
+                                    </div>
                                 </div>
 
+                                <div class="form-group col-sm-12">
+                                    <label for="medical_facility_location">Medical facility location</label>
+                                    <div>
+                                        <textarea class="form-control" id="medical_facility_location" name="medical_facility_location" rows="3">{{ $assessment->medical_facility_location }}</textarea>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="water_services">Water Sources</label>

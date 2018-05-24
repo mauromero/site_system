@@ -7,7 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Hazard;
 use App\KitLocation;
-use App\MedicalFacility;
 use App\Assessment;
 use App\Customer;
 use App\Task;
@@ -67,7 +66,8 @@ class AssessmentController extends Controller
             'usa_marked'=> request('usa_marked'),
             'emergency_phone'=> request('emergency_phone'),
             'kit_location'=> request('kit_location'),
-            'medical_facility_id'=> request('medical_facility_id'),
+            'medical_facility_name'=> request('medical_facility_name'),
+            'medical_facility_location'=> request('medical_facility_location'),
             'water_sources'=> request('water_sources'),
             'bleed_off'=> request('bleed_off'),
             'cutting'=> request('cutting'),
@@ -106,8 +106,7 @@ class AssessmentController extends Controller
             $assessment = Assessment::find($id);
             if ( $assessment->user_id == auth()->user()->id){
                 $customers = Customer::all();
-                $med_facilities = MedicalFacility::all();
-                return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'med_facilities'));
+                return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
             }else{
             return redirect('/home');
             }  
@@ -143,7 +142,8 @@ class AssessmentController extends Controller
                 $assessment->usa_marked = request('usa_marked');
                 $assessment->emergency_phone = request('emergency_phone');
                 $assessment->kit_location = request('kit_location');
-                $assessment->medical_facility_id = request('medical_facility_id');
+                $assessment->medical_facility_name = request('medical_facility_name');
+                $assessment->medical_facility_location = request('medical_facility_location');
                 $assessment->water_sources = request('water_sources');
                 $assessment->bleed_off = request('bleed_off');
                 $assessment->cutting = request('cutting');
@@ -173,11 +173,10 @@ class AssessmentController extends Controller
             $assessment = Assessment::find($id);
             if ( $assessment->user_id == auth()->user()->id){
                 $customers = Customer::all();
-                $med_facilities = MedicalFacility::all();
                 $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
                 $hazards = Hazard::orderBy('name', 'asc')->get();
                 $tasks_hazards = hazard_task::all();
-                return view('forms.assessments.assessments_delete', compact('assessment', 'customers', 'med_facilities', 'tasks', 'hazards', 'tasks_hazards'));
+                return view('forms.assessments.assessments_delete', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
             }else{
                 return redirect('/home');
             }  
@@ -192,7 +191,9 @@ class AssessmentController extends Controller
         if(auth()->user()){
             $assessment = Assessment::find($id);
             if ( $assessment->user_id == auth()->user()->id){
-                Storage::disk('public')->delete('locations/'.$assessment->image_name);
+                if($assessment->image_name){
+                    Storage::disk('public')->delete('locations/'.$assessment->image_name);
+                }
                 $assessment->delete();
                 return redirect('/users/forms');
             }else{

@@ -24,12 +24,10 @@
                     <div class="card bg-light mb-3" >
                         <div class="card-body">
                         <div class="row">
-
                             <div class="col-sm-12">
                                 <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
                                 <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}  </p>
                             </div>
-
                         </div>
                         </div>
                     </div>
@@ -123,21 +121,19 @@
                                     </div>
                                 </div>
 
-
                                 <div class="form-group col-sm-12">
-                                    <label for="medical_facility_id">Nearest Medical Facility</label>
-                                    <select class="form-control" id="medical_facility_id"  name="medical_facility_id">
-                                        <option value="0">---</option>
-                                        @foreach ($med_facilities as $facility) 
-                                            <option value="{{ $facility->id }}" 
-                                                @if($assessment->medical_facility_id == $facility->id)
-                                                    selected
-                                                @endif  
-                                            >{{ $facility->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="medical_facility_name">Nearest medical facility</label>
+                                    <div>
+                                        <input type="text" class="form-control" id="medical_facility_name" name="medical_facility_name" value="{{ $assessment->medical_facility_name }}"  placeholder="Name" >
+                                    </div>
                                 </div>
 
+                                <div class="form-group col-sm-12">
+                                    <label for="medical_facility_location">Medical facility location</label>
+                                    <div>
+                                        <textarea class="form-control" id="medical_facility_location" name="medical_facility_location" rows="3">{{ $assessment->medical_facility_location }}</textarea>
+                                    </div>
+                                </div>
 
                                 <div class="form-group col-sm-12">
                                     <label for="water_services">Water Sources</label>
