@@ -105,10 +105,18 @@ class AssessmentController extends Controller
         if(auth()->user()){
             $assessment = Assessment::find($id);
             if ( $assessment->user_id == auth()->user()->id){
-                $customers = Customer::all();
-                return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
+                if ( $assessment->submitted){
+                    $customers = Customer::all();
+                    $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+                    $hazards = Hazard::orderBy('name', 'asc')->get();
+                    $tasks_hazards = hazard_task::all();
+                    return view('forms.assessments.assessments_submitted', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
+                }else{
+                    $customers = Customer::all();
+                    return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
+                }
             }else{
-            return redirect('/home');
+                return redirect('/home');
             }  
         }else{
             return redirect('/home');
@@ -126,39 +134,102 @@ class AssessmentController extends Controller
     {
         if(auth()->user()){
             $assessment = Assessment::find($id);
-            $this->validate(request(),[
-                'job_number' => 'unique:assessments,job_number,'.$assessment->id
-            ]);
-            if ( $assessment->user_id == auth()->user()->id){
-                $assessment = Assessment::find($id);
-                $assessment->start_date = request('start_date');
-                $assessment->job_number = request('job_number');
-                $assessment->exp_date = request('exp_date');
-                $assessment->location = request('location');
-                $assessment->gps_n = request('gps_n');
-                $assessment->gps_n = request('gps_n');
-                $assessment->gps_w = request('gps_w');
-                $assessment->usa_ticket = request('usa_ticket');
-                $assessment->usa_marked = request('usa_marked');
-                $assessment->emergency_phone = request('emergency_phone');
-                $assessment->kit_location = request('kit_location');
-                $assessment->medical_facility_name = request('medical_facility_name');
-                $assessment->medical_facility_location = request('medical_facility_location');
-                $assessment->water_sources = request('water_sources');
-                $assessment->bleed_off = request('bleed_off');
-                $assessment->cutting = request('cutting');
-                $assessment->test_hole = request('test_hole');
-                $assessment->customer_id = request('customer_id');
-                $assessment->updated_at = Carbon::now();
-                $assessment->save(); 
-                return redirect('/users/forms');
+
+            if($request->submit){
+
+                    $this->validate(request(),[
+                        'job_number' => 'required|max:20|unique:assessments,job_number,'.$assessment->id,
+                        'location' => 'required|max:255',
+                        'gps_n' => 'required|max:15',
+                        'gps_w' => 'required|max:15',
+                        'usa_ticket' => 'required|max:45',
+                        'usa_marked' => 'required|max:45',
+                        'emergency_phone' => 'required|max:20',
+                        'kit_location' => 'required|max:255',
+                        'medical_facility_name' => 'required|required|max:65',
+                        'medical_facility_location' => 'required|max:255',
+                        'water_sources' => 'required|max:255',
+                        'bleed_off' => 'required|max:255',
+                        'cutting' => 'required|max:255',
+                        'test_hole' => 'required|max:255',
+                    ]);
+    
+                    if ( $assessment->user_id == auth()->user()->id){
+                        $assessment->start_date = request('start_date');
+                        $assessment->job_number = request('job_number');
+                        $assessment->exp_date = request('exp_date');
+                        $assessment->location = request('location');
+                        $assessment->gps_n = request('gps_n');
+                        $assessment->gps_w = request('gps_w');
+                        $assessment->usa_ticket = request('usa_ticket');
+                        $assessment->usa_marked = request('usa_marked');
+                        $assessment->emergency_phone = request('emergency_phone');
+                        $assessment->kit_location = request('kit_location');
+                        $assessment->medical_facility_name = request('medical_facility_name');
+                        $assessment->medical_facility_location = request('medical_facility_location');
+                        $assessment->water_sources = request('water_sources');
+                        $assessment->bleed_off = request('bleed_off');
+                        $assessment->cutting = request('cutting');
+                        $assessment->test_hole = request('test_hole');
+                        $assessment->customer_id = request('customer_id');
+                        $assessment->submitted = true;
+                        $assessment->updated_at = Carbon::now();
+                        $assessment->created_at = Carbon::now();
+                        $assessment->save(); 
+                        return redirect('/users/forms');
+                    }
+            }
+            elseif($request->save){
+                $this->validate(request(),[
+                    'job_number' => 'max:20|unique:assessments,job_number,'.$assessment->id,
+                    'location' => 'max:255',
+                    'gps_n' => 'max:15',
+                    'gps_w' => 'max:15',
+                    'usa_ticket' => 'max:45',
+                    'usa_marked' => 'max:45',
+                    'emergency_phone' => 'max:20',
+                    'kit_location' => 'max:255',
+                    'medical_facility_name' => 'max:65',
+                    'medical_facility_location' => 'max:255',
+                    'water_sources' => 'max:255',
+                    'bleed_off' => 'max:255',
+                    'cutting' => 'max:255',
+                    'test_hole' => 'max:255',
+                ]);
+                if ( $assessment->user_id == auth()->user()->id){
+                    $assessment = Assessment::find($id);
+                    $assessment->start_date = request('start_date');
+                    $assessment->job_number = request('job_number');
+                    $assessment->exp_date = request('exp_date');
+                    $assessment->location = request('location');
+                    $assessment->gps_n = request('gps_n');
+                    $assessment->gps_w = request('gps_w');
+                    $assessment->usa_ticket = request('usa_ticket');
+                    $assessment->usa_marked = request('usa_marked');
+                    $assessment->emergency_phone = request('emergency_phone');
+                    $assessment->kit_location = request('kit_location');
+                    $assessment->medical_facility_name = request('medical_facility_name');
+                    $assessment->medical_facility_location = request('medical_facility_location');
+                    $assessment->water_sources = request('water_sources');
+                    $assessment->bleed_off = request('bleed_off');
+                    $assessment->cutting = request('cutting');
+                    $assessment->test_hole = request('test_hole');
+                    $assessment->customer_id = request('customer_id');
+                    $assessment->updated_at = Carbon::now();
+                    $assessment->save(); 
+                    return redirect('/users/forms');
+                }else{
+                    return redirect('/home');
+                } 
             }else{
                 return redirect('/home');
-            }  
+            } 
+             
         }else{
             return redirect('/home');
         }  
     }
+   
 
     /**
      * Remove the specified resource from storage.

@@ -12,10 +12,9 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("roles")->insert([         
-            ["code" => "anon", "name" => "Anonimous", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],
-            ["code" => "auth", "name" => "Authenticated", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],
-            ["code" => "admin", "name" => "Administrator", "created_at" => Carbon::now(), "updated_at" => Carbon::now()], 
+        DB::table("roles")->insert([  
+            ["code" => "admin", "name" => "Administrator", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],   
+            ["code" => "user", "name" => "User", "created_at" => Carbon::now(), "updated_at" => Carbon::now()],    
         ]);
     }
 }

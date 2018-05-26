@@ -25,8 +25,14 @@
                         <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
+                            @if($assessment->submitted)
+                                <p class="font-weight-bold"><label> Submitted on&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
+                                <p class="font-weight-bold"><label> By: &nbsp;</label>{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}  </p>
+                                @else
                                 <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
                                 <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}  </p>
+
+                            @endif    
                             </div>
                         </div>
                         </div>
@@ -138,36 +144,40 @@
                                 <div class="form-group col-sm-12">
                                     <label for="water_services">Water Sources</label>
                                     <div>
-                                        <input type="text" class="form-control" id="water_sources" name="water_sources" value="{{ $assessment->water_sources }}"  placeholder="" >
+                                        <textarea class="form-control" id="water_sources" name="water_sources" rows="3">{{ $assessment->water_sources }}</textarea>
                                     </div>
                                 </div>    
 
                                 <div class="form-group col-sm-12">
                                     <label for="bleed_off">Bleed Off</label>
                                     <div>
-                                        <input type="text" class="form-control" id="bleed_off" name="bleed_off" value="{{ $assessment->bleed_off }}"  placeholder="" >
+                                        <textarea class="form-control" id="bleed_off" name="bleed_off" rows="3">{{ $assessment->bleed_off }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group col-sm-12">
                                     <label for="cutting">Cutting</label>
                                     <div>
-                                        <input type="text" class="form-control" id="cutting" name="cutting"  value="{{ $assessment->cutting }}"  placeholder="" >
+                                        <textarea class="form-control" id="cutting" name="cutting" rows="3">{{ $assessment->cutting }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group col-sm-12">
                                     <label for="test_hole">Test Hole</label>
                                     <div>
-                                        <input type="text" class="form-control" id="test_hole" name="test_hole" value="{{ $assessment->test_hole }}"  placeholder="" >
+                                        <textarea class="form-control" id="test_hole" name="test_hole" rows="3">{{ $assessment->test_hole }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group col-sm-6 text-center">
-                                    <button type="submit" class="btn btn-success pull-right">Save Changes</button>
+                                    <button type="submit" class="btn btn-success pull-right" name="save" value="save">Save Changes</button>
                                 </div>
                                 <div class="form-group col-sm-6 text-center">
-                                    <button type="submit" class="btn btn-primary pull-left">Submit Form</button>
+                                @if( !$assessment->submitted )
+                                    <button type="submit" class="btn btn-primary pull-left" name="submit" value="submit">Submit Form</button>
+                                    @else
+                                    <a href="/users/forms" class="btn btn-primary pull-left">Cancel</a>
+                                @endif    
                                 </div>
                                 
                             </div>

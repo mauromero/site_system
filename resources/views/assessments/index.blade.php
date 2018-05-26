@@ -9,6 +9,7 @@
 
                 <div class="list-group">
 
+                    <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
@@ -16,7 +17,6 @@
                             <th scope="col">Customer</th>
                             <th scope="col">Created</th>
                             <th scope="col">Edit</th>
-                            <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,22 +42,26 @@
                                     {{ $assessment->created_at->toFormattedDateString() }}
                                 </a>
                             </td>
-                            
+                            @if($assessment->submitted)
+                            <td>
+                                <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
+                                    View</a>
+                            </td>
+                            @else
                             <td>
                                 <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
                                     Edit</a>
-                            </td>
-
-                            <td>
                                 <a class="btn btn-sm btn-danger" href="/assessments/delete/{{ $assessment->id }}" >
                                     Delete
                                 </a>
                             </td>
+                            @endif
                             </tr>
                             
                         @endforeach    
                         </tbody>
                         </table>
+                </div>
                 </div>
             </div>
             </div>
