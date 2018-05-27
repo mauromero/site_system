@@ -28,12 +28,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-
-
-
                     <div class="collapse navbar-collapse" id="app-navbar-collapse">
-
-
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav mr-auto">
                             <!-- Authentication Links -->
@@ -43,19 +38,32 @@
                             @else
                             <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ route('customers') }}">Customers</a></li>
-                                <li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         {{ Auth::user()->name }} <span class="caret"></span>
-                                    </a>
+                                </a>
 
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="{{ route('forms') }}">My Forms</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">Logout</a>
-                                        
-                                        
                                     </div>
+                            </li>
+                            @can('isAdmin')
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Admin<span class="caret"></span>
+                                </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('forms') }}">Users</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">Logout</a>
+                                    </div>
+                            </li> 
+                            @endcan    
                             @endguest
                         </ul>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

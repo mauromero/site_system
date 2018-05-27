@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Gate;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(Gate::denies('isUser') && Gate::denies('isAdmin')){
+            abort(404,"Not Authorized");
+        }
         return view('home');
     }
 
