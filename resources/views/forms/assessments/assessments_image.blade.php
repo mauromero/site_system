@@ -18,11 +18,18 @@
 
                         <div class="form-group">
                             <label for="location_img">Choose a file to upload from your computer or device.</label>
-                            <input type="file" id="location_img" name="location_img"  class="form-control-file"></input> 
+                            <div class="input-group mb-3">
+                                <div class="custom-file border-top border-bottom">
+                                    <input type="file" class="form-control-file" id="location_img" name="location_img" >
+                                </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-success">Upload File</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="text-left">
-                            <button type="submit" class="btn btn-success">Upload File</button>
+                            
                         </div>
                     </form>
                 </div>

@@ -12,12 +12,18 @@
 */
 Auth::routes();
 
-///User
+//Profile Controller
 Route::get('/users/profile', 'ProfileController@show')->name('profile');
 Route::get('/users/forms', 'ProfileController@index')->name('forms');
 
 
-///Home
+// User
+Route::get('/users', 'UserController@index')->name('users');
+Route::get('/users/{user}', 'UserController@show');
+Route::get('/users/edit/{user}', 'UserController@edit');
+Route::patch('/users/edit/{user}', 'UserController@update');
+
+
 // Route::get('/','HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@index')->name('home');

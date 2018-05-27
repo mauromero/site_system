@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration {
 			$table->string('last_name', 45)->nullable();
 			$table->string('phone', 45)->nullable();
 			$table->string('role',10)->default('user');
+			$table->boolean('active')->default(true);
 			$table->timestamps();
 		});
 	}
