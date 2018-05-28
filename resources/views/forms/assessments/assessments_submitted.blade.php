@@ -28,7 +28,7 @@
                                         Submitted&nbsp;</label>
                                     </label>
                                     </div>
-                                    <p>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
+                                    <p>{{ $assessment->created_at}}</p>
                                     <p>User:&nbsp;<span class="font-weight-bold">{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}</span> </p>
                                     <p>Customer: <span class="font-weight-bold">{{ $assessment->customer->name }} {{ $assessment->customer->last_name }}</span></p>
                                     

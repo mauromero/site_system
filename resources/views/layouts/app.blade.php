@@ -50,7 +50,7 @@
                                                         document.getElementById('logout-form').submit();">Logout</a>
                                     </div>
                             </li>
-                            @can('isAdmin')
+                       
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Admin<span class="caret"></span>
@@ -63,7 +63,7 @@
                                                         document.getElementById('logout-form').submit();">Logout</a>
                                     </div>
                             </li> 
-                            @endcan    
+                           
                             @endguest
                         </ul>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

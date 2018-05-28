@@ -103,14 +103,20 @@ class AssessmentController extends Controller
     public function edit($id)
     {
         if(auth()->user()){
+            $user = auth()->user();
             $assessment = Assessment::find($id);
-            if ( $assessment->user_id == auth()->user()->id){
+            if ( $assessment->user_id == auth()->user()->id || $user->can('view',$user)){
                 if ( $assessment->submitted){
                     $customers = Customer::all();
                     $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
                     $hazards = Hazard::orderBy('name', 'asc')->get();
                     $tasks_hazards = hazard_task::all();
-                    return view('forms.assessments.assessments_submitted', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
+                   
+                    if($user->can('view',$user)){
+                        return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
+                    }else{
+                        return view('forms.assessments.assessments_submitted', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
+                    }
                 }else{
                     $customers = Customer::all();
                     return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));

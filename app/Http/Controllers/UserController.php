@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Gate;
 
 class UserController extends Controller
 {
+
+        public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +20,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users=User::orderBy('last_name', 'desc')->get();
-        return view('users.index', compact('users'));
+        $user = auth()->user();
+        if($user->can('view',$user)){
+            $users=User::orderBy('last_name', 'desc')->get();
+            return view('users.index', compact('users'));
+        }else{
+            return redirect('home');
+        }
+
     }
 
     /**
@@ -47,8 +59,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-
-        return view('users.show', compact('user'));
+        $user = auth()->user();
+        if($user->can('view',$user)){
+            return view('users.show', compact('user'));
+        }else{
+            return redirect('home');
+        }
     }
 
     /**
@@ -59,7 +75,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $user = auth()->user();
+        if($user->can('view',$user)){
+            return view('users.edit', compact('user'));
+        }else{
+            return redirect('home');
+        }            
     }
 
     /**
@@ -71,15 +92,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user=User::find($user->id);
-        $user->name = request('name');
-        $user->last_name = request('last_name');
-        $user->phone = request('phone');
-        $user->email = request('email');
-        $user->role = request('role');
-        $request->active==null ? $user->active = false : $user->active = true;
-        $user->save();
-        return redirect('users');
+        $user = auth()->user();
+        if($user->can('view',$user)){
+            $user=User::find($user->id);
+            $user->name = request('name');
+            $user->last_name = request('last_name');
+            $user->phone = request('phone');
+            $user->email = request('email');
+            $user->role = request('role');
+            $request->active==null ? $user->active = false : $user->active = true;
+            $user->save();
+            return redirect('users');
+
+        }else{
+            return redirect('home');
+        }
     }
 
     /**
