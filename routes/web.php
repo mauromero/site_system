@@ -45,7 +45,8 @@ Route::get('/facilities', 'FacilityController@index');
 Route::get('/facilities/{facility}', 'FacilityController@details');
 
 // Assessments
-Route::get('/assessments', 'AssessmentController@create');
+Route::get('/assessments', 'AssessmentController@index')->name('assessments');
+Route::get('/assessments/create', 'AssessmentController@create');
 Route::post('/assessments', 'AssessmentController@store');
 Route::get('/assessments/edit/{assessment}', 'AssessmentController@edit');
 Route::get('/assessments/{assessment}/tasks/', 'TaskController@index');

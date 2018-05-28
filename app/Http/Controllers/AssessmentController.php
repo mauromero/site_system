@@ -12,6 +12,7 @@ use App\Customer;
 use App\Task;
 use App\hazard_task;
 use Illuminate\Support\Facades\Storage;
+use Gate;
 
 class AssessmentController extends Controller
 {
@@ -26,6 +27,13 @@ class AssessmentController extends Controller
      */
     public function index()
     {
+        $user= auth()->user();
+        if($user->can('view',$user)){
+            $assessments = Assessment::where('submitted','=',1)->get();
+            return view('forms.assessments.assessments_index', compact('assessments'));
+        }else{
+            return redirect('home');
+        }
 
     }
 
@@ -100,33 +108,31 @@ class AssessmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Assessment $assessment)
     {
-        if(auth()->user()){
-            $user = auth()->user();
-            $assessment = Assessment::find($id);
-            if ( $assessment->user_id == auth()->user()->id || $user->can('view',$user)){
-                if ( $assessment->submitted){
-                    $customers = Customer::all();
-                    $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
-                    $hazards = Hazard::orderBy('name', 'asc')->get();
-                    $tasks_hazards = hazard_task::all();
-                   
-                    if($user->can('view',$user)){
-                        return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
-                    }else{
-                        return view('forms.assessments.assessments_submitted', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
-                    }
+
+        $user = auth()->user();
+        $assessment = Assessment::find($assessment->id);
+        if (  $user->can('edit',$assessment)){
+            if ( $assessment->submitted){
+                $customers = Customer::all();
+                $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+                $hazards = Hazard::orderBy('name', 'asc')->get();
+                $tasks_hazards = hazard_task::all();
+                
+                if($user->can('edit_submitted',$assessment)){
+                    return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
                 }else{
-                    $customers = Customer::all();
-                    return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
+                    return view('forms.assessments.assessments_submitted', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
                 }
             }else{
-                return redirect('/home');
-            }  
+                $customers = Customer::all();
+                return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
+            }
         }else{
             return redirect('/home');
-        }      
+        }  
+   
     }
 
     /**
@@ -138,52 +144,53 @@ class AssessmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(auth()->user()){
             $assessment = Assessment::find($id);
+            $user = auth()->user();
 
             if($request->submit){
 
-                    $this->validate(request(),[
-                        'job_number' => 'required|max:20|unique:assessments,job_number,'.$assessment->id,
-                        'location' => 'required|max:255',
-                        'gps_n' => 'required|max:15',
-                        'gps_w' => 'required|max:15',
-                        'usa_ticket' => 'required|max:45',
-                        'usa_marked' => 'required|max:45',
-                        'emergency_phone' => 'required|max:20',
-                        'kit_location' => 'required|max:255',
-                        'medical_facility_name' => 'required|required|max:65',
-                        'medical_facility_location' => 'required|max:255',
-                        'water_sources' => 'required|max:255',
-                        'bleed_off' => 'required|max:255',
-                        'cutting' => 'required|max:255',
-                        'test_hole' => 'required|max:255',
-                    ]);
-    
-                    if ( $assessment->user_id == auth()->user()->id){
-                        $assessment->start_date = request('start_date');
-                        $assessment->job_number = request('job_number');
-                        $assessment->exp_date = request('exp_date');
-                        $assessment->location = request('location');
-                        $assessment->gps_n = request('gps_n');
-                        $assessment->gps_w = request('gps_w');
-                        $assessment->usa_ticket = request('usa_ticket');
-                        $assessment->usa_marked = request('usa_marked');
-                        $assessment->emergency_phone = request('emergency_phone');
-                        $assessment->kit_location = request('kit_location');
-                        $assessment->medical_facility_name = request('medical_facility_name');
-                        $assessment->medical_facility_location = request('medical_facility_location');
-                        $assessment->water_sources = request('water_sources');
-                        $assessment->bleed_off = request('bleed_off');
-                        $assessment->cutting = request('cutting');
-                        $assessment->test_hole = request('test_hole');
-                        $assessment->customer_id = request('customer_id');
-                        $assessment->submitted = true;
-                        $assessment->updated_at = Carbon::now();
-                        $assessment->created_at = Carbon::now();
-                        $assessment->save(); 
-                        return redirect('/users/forms');
-                    }
+                $this->validate(request(),[
+                    'job_number' => 'required|max:20|unique:assessments,job_number,'.$assessment->id,
+                    'location' => 'required|max:255',
+                    'gps_n' => 'required|max:15',
+                    'gps_w' => 'required|max:15',
+                    'usa_ticket' => 'required|max:45',
+                    'usa_marked' => 'required|max:45',
+                    'emergency_phone' => 'required|max:20',
+                    'kit_location' => 'required|max:255',
+                    'medical_facility_name' => 'required|required|max:65',
+                    'medical_facility_location' => 'required|max:255',
+                    'water_sources' => 'required|max:255',
+                    'bleed_off' => 'required|max:255',
+                    'cutting' => 'required|max:255',
+                    'test_hole' => 'required|max:255',
+                ]);
+
+                if ($user->can('update',$assessment) ){
+                    $assessment->start_date = request('start_date');
+                    $assessment->job_number = request('job_number');
+                    $assessment->exp_date = request('exp_date');
+                    $assessment->location = request('location');
+                    $assessment->gps_n = request('gps_n');
+                    $assessment->gps_w = request('gps_w');
+                    $assessment->usa_ticket = request('usa_ticket');
+                    $assessment->usa_marked = request('usa_marked');
+                    $assessment->emergency_phone = request('emergency_phone');
+                    $assessment->kit_location = request('kit_location');
+                    $assessment->medical_facility_name = request('medical_facility_name');
+                    $assessment->medical_facility_location = request('medical_facility_location');
+                    $assessment->water_sources = request('water_sources');
+                    $assessment->bleed_off = request('bleed_off');
+                    $assessment->cutting = request('cutting');
+                    $assessment->test_hole = request('test_hole');
+                    $assessment->customer_id = request('customer_id');
+                    $assessment->submitted = true;
+                    $assessment->updated_at = Carbon::now();
+                    
+                    $assessment->created_at == null ? $assessment->created_at = Carbon::now() : $assessment->created_at;
+                    $assessment->save(); 
+                    return redirect('/users/forms');
+                }
             }
             elseif($request->save){
                 $this->validate(request(),[
@@ -202,7 +209,7 @@ class AssessmentController extends Controller
                     'cutting' => 'max:255',
                     'test_hole' => 'max:255',
                 ]);
-                if ( $assessment->user_id == auth()->user()->id){
+                if ( $user->can('update',$assessment) ){
                     $assessment = Assessment::find($id);
                     $assessment->start_date = request('start_date');
                     $assessment->job_number = request('job_number');
@@ -222,18 +229,20 @@ class AssessmentController extends Controller
                     $assessment->test_hole = request('test_hole');
                     $assessment->customer_id = request('customer_id');
                     $assessment->updated_at = Carbon::now();
-                    $assessment->save(); 
-                    return redirect('/users/forms');
+                    $request->submitted==null ? $assessment->submitted = false : $assessment->submitted = true;
+                    $assessment->save();
+                    if(Gate::allows('isAdmin')){
+                        return redirect('assessments');
+                    }else{
+                        return redirect('/users/forms');
+                    }
                 }else{
                     return redirect('/home');
                 } 
             }else{
                 return redirect('/home');
             } 
-             
-        }else{
-            return redirect('/home');
-        }  
+
     }
    
 

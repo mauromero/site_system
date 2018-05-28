@@ -59,8 +59,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user = auth()->user();
-        if($user->can('view',$user)){
+        $auth_user = auth()->user();
+        if($auth_user->can('view', $user)){
             return view('users.show', compact('user'));
         }else{
             return redirect('home');
@@ -75,8 +75,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $user = auth()->user();
-        if($user->can('view',$user)){
+        $auth_user = auth()->user();
+        if($auth_user->can('update', $user)){
             return view('users.edit', compact('user'));
         }else{
             return redirect('home');
@@ -92,8 +92,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user = auth()->user();
-        if($user->can('view',$user)){
+        $auth_user = auth()->user();
+        if($auth_user->can('update', $user)){
             $user=User::find($user->id);
             $user->name = request('name');
             $user->last_name = request('last_name');
