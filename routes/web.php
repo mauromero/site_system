@@ -40,9 +40,6 @@ Route::patch('/customers/edit/{customer}', 'CustomerController@update');
 Route::get('/customers/delete/{customer}', 'CustomerController@delete');
 Route::delete('/customers/delete/{customer}', 'CustomerController@destroy');
 
-// Facilites
-Route::get('/facilities', 'FacilityController@index');
-Route::get('/facilities/{facility}', 'FacilityController@details');
 
 // Assessments
 Route::get('/assessments', 'AssessmentController@index')->name('assessments');

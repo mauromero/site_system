@@ -305,18 +305,16 @@ class AssessmentController extends Controller
         }else{
             return redirect('/home');
         }         
-        
     }
 
     public function tasks_save(Assessment $assessment)
     {
-        if(auth()->user()){
-
             $this->validate(request(),[
                 'name' => 'required'
             ]);
+            $user = auth()->user();
             $assessment = Assessment::find($assessment->id);
-            if ($assessment->user_id == auth()->user()->id){
+            if ($assessment->user_id == $user->id || $user->role == 'admin' ) {
                 $new_task=Task::create([
                     'assessment_id'=> $assessment->id,
                     'name' => request('name'),
@@ -327,32 +325,27 @@ class AssessmentController extends Controller
             }else{
                 return redirect('/home');
             }  
-        }else{
-            return redirect('/home');
-        }  
     }
 
     public function image_show($id){
-        if(auth()->user()){
+            $user = auth()->user();
             $assessment = Assessment::find($id);
-            if ($assessment->user_id == auth()->user()->id){
+            if ($assessment->user_id == $user->id  || $user->role == 'admin' ){
                 return view('forms.assessments.assessments_image', compact('assessment'));
             }else{
-                return redirect('/home');
+                return redirect('home');
             }
-        }else{
-            return redirect('/home');
-        }  
+
     }
 
     public function image_store(Request $request, $id)
     {
-        if(auth()->user()){
             $this->validate(request(),[
                 'location_img' => 'required'
             ]);
+                $user = auth()->user();
                 $assessment = Assessment::find($id);
-                if ($assessment->user_id == auth()->user()->id){
+                if ($assessment->user_id == $user ->id || $user->role == 'admin' ){
                     if($assessment->image_name){
                         Storage::disk('public')->delete('locations/'.$assessment->image_name);
                     }
@@ -365,11 +358,9 @@ class AssessmentController extends Controller
                     $assessment->save(); 
                     return view('forms.assessments.assessments_image', compact('assessment'));
                 }else{
-                    return redirect('/home');
+                    return redirect('home');
             }  
-        }else{
-            return redirect('/home');
-        }      
+ 
     }
 
     public function image_delete($id)
@@ -385,10 +376,10 @@ class AssessmentController extends Controller
                     }
                     return view('forms.assessments.assessments_image', compact('assessment'));
                 }else{
-                    return redirect('/home');
+                    return redirect('home');
             }  
         }else{
-            return redirect('/home');
+            return redirect('home');
         }      
     }
 
