@@ -35,7 +35,7 @@
                                     <select class="form-control" id="customer_id"  name="customer_id">
                                         <option value="">---</option>
                                         @foreach ($customers as $customer) 
-                                            <option value="{{ $customer->id }}">{{$customer->name}}&nbsp;{{$customer->last_name}}</option>
+                                            <option value="{{ $customer->id }}">{{$customer->company}}</option>
                                         @endforeach
                                     </select>
                                 </div>

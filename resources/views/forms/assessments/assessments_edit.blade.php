@@ -67,7 +67,7 @@
                                             @if($assessment->customer_id == $customer->id)
                                                 selected
                                             @endif    
-                                        >{{$customer->name}}&nbsp;{{$customer->last_name}}</option>
+                                        >{{$customer->company}}</option>
                                     @endforeach
                                 </select>
                             </div>

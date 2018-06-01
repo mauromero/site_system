@@ -41,7 +41,7 @@
                     <div class="card-body "> 
                                                            
 <!-- FORM -->
-                        <form method="POST" action="/hazards_tasks/">
+                        <form method="POST" action="/hazards_tasks">
                         {{ csrf_field() }}
 
                         <input name="task_id" type="hidden" value="{{ $task->id }}">

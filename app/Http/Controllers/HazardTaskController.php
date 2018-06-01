@@ -22,9 +22,10 @@ class HazardTaskController extends Controller
     }
 
 
-    public function create(Task $task)
+    public function create(Request $request)
     {
         $user = auth()->user();
+        $task = Task::find($request->task_id);
         $hazards = Hazard::orderBy('name', 'asc')->get();
         $assessment = Assessment::find($task->assessment_id);
         $tasks_hazards = hazard_task::where('task_id', $task->id)->get();
@@ -97,11 +98,12 @@ class HazardTaskController extends Controller
     public function update(Request $request, $id)
     {
         $user = auth()->user();
+        $hazard_task = hazard_task::find($id);
         $task = Task::find($hazard_task->task_id);
         $assessment = Assessment::find($task->assessment_id);
         if ($assessment->user_id == $user->id || $user->role == 'admin'){
         
-            $hazard_task = hazard_task::find($id);
+            
             $hazard_task->hazard_id = request('hazard_id');
             $hazard_task->hazard = request('hazard');
             $hazard_task->measure = request('measure');
