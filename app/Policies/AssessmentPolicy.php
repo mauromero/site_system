@@ -47,12 +47,13 @@ class AssessmentPolicy
 
     public function edit(User $user, Assessment $assessment)
     {
+        // return $user->role == 'admin' || $user->id == $assessment->user_id;
         return $user->role == 'admin' || $user->id == $assessment->user_id;
     }
     
     public function edit_submitted(User $user, Assessment $assessment)
     {
-        return $user->role == 'admin';
+        return $user->role == 'admin' || $user->id == $assessment->user_id;
     }
 
     /**

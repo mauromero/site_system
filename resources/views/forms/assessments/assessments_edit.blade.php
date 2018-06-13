@@ -20,9 +20,6 @@
 
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="/assessments/edit/{{ $assessment->id }}">
-                            {{ csrf_field() }}
-                            {{ method_field('PATCH') }}
 
                     <div class="card bg-light mb-3" >
                         <div class="card-body">
@@ -47,9 +44,13 @@
                         </div>
                     </div>
 
-                        
+                <form method="POST" action="/assessments/edit/{{ $assessment->id }}">
+                            {{ csrf_field() }}
+                            {{ method_field('PATCH') }}
 
-                            <div class="form-row">
+
+
+                        <div class="form-row">
 
                              <div class="form-group col-sm-4">
                                         <label for="job_number">Job Number</label>

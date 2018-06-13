@@ -16,6 +16,7 @@
                             <th scope="col">Job #</th>
                             <th scope="col">Customer</th>
                             <th scope="col">Created</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Edit</th>
                             </tr>
                         </thead>
@@ -27,8 +28,7 @@
                                 <a href="/assessments/edit/{{ $assessment->id }}" > 
                                     {{ $assessment->job_number}}
                                 </a> 
-                            </th>
-                            
+                            </th>                         
                             <td>
                                 @if ($assessment->customer)
                                 <a href="/assessments/edit/{{ $assessment->id }}" >
@@ -36,18 +36,20 @@
                                 </a> 
                                 @endif
                             </td>
-                                   
                             <td>
                                 <a href="/assessments/edit/{{ $assessment->id }}" >
                                     {{ $assessment->created_at->toFormattedDateString() }}
                                 </a>
                             </td>
-                            @if($assessment->submitted)
                             <td>
-                                <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
-                                    View</a>
+                                <a href="/assessments/edit/{{ $assessment->id }}" >
+                                @if ($assessment->submitted)
+                                    Submitted
+                                @else
+                                    <strong>Not Submitted</strong>
+                                @endif    
+                                </a>
                             </td>
-                            @else
                             <td>
                                 <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
                                     Edit</a>
@@ -55,7 +57,6 @@
                                     Delete
                                 </a>
                             </td>
-                            @endif
                             </tr>
                             
                         @endforeach    
