@@ -29,12 +29,42 @@ class AssessmentController extends Controller
     {
         $user= auth()->user();
         if($user->can('view',$user)){
-            $assessments = Assessment::where('submitted','=',1)->get();
+
+            $assessments = new Assessment;
+            $queries = [];
+
+            if(request()->has('job_number')){
+                $jobNumber = request('job_number');
+                $assessments = Assessment::where('job_number','like',$jobNumber.'%');  
+                $queries['job_number'] = $jobNumber;
+            }
+
+            if(request()->has('company')){
+                $assessments = Assessment::with('Customer:id,company')
+                    ->whereHas('Customer',function($customer){
+                        $company = request('company');
+                        $customer->where('company','like',$company.'%');
+                    });
+                $queries['company']=request('company');
+            }
+
+            if(request()->has('userName')){
+                $assessments = Assessment::with('User:id,name,last_name')
+                    ->whereHas('User',function($user){
+                        $userName = request('userName');
+                        $user->where('name','like','%'.$userName.'%')
+                        ->orWhere('last_name','like','%'.$userName.'%');
+                    });           
+                $queries['userName']=request('userName');
+            }
+
+            $assessments = $assessments->paginate(5)->appends($queries);
             return view('forms.assessments.assessments_index', compact('assessments'));
-        }else{
-            return redirect('home');
+
         }
 
+        return redirect('home');
+        
     }
 
     /** 
