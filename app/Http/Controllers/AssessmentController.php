@@ -60,7 +60,7 @@ class AssessmentController extends Controller
 
             
 
-            $assessments = $assessments->paginate(5)->appends($queries);
+            $assessments = $assessments->sortable(['created_at' => 'desc'])->paginate(5)->appends($queries);
             return view('forms.assessments.assessments_index', compact('assessments'));
 
             

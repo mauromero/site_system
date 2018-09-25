@@ -62,8 +62,8 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                <th scope="col">Job #</th>
-                                <th scope="col">Customer</th>
+                                <th scope="col">@sortablelink('job_number', 'Job #')</th>
+                                <th scope="col">@sortablelink('customer.company', 'Customer')</th>
                                 <th scope="col">User</th>
                                 <th scope="col">Created</th>
                                 <th scope="col">Status</th>
@@ -96,7 +96,7 @@
                                     
                                 <td>
                                     <a href="/assessments/edit/{{ $assessment->id }}" >
-                                        {{ $assessment->created_at->toFormattedDateString() }}
+                                        {{ $assessment->created_at->format('m-d-y') }}
                                     </a>
                                 </td>
                                 <td>
@@ -129,12 +129,15 @@
                                 </tr>
                                 
                             @endforeach    
+                           
                             </tbody>
                             </table>
+                            {!! $assessments->appends(\Request::except('page'))->render() !!}
                         </div>
 
                     <div class="pagination justify-content-center">
                       {{ $assessments->links("pagination::bootstrap-4") }} 
+                      job_number
                     </div>    
                 </div>
             </div>
