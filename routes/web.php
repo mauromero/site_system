@@ -40,6 +40,7 @@ Route::patch('/customers/edit/{customer}', 'CustomerController@update');
 Route::get('/customers/delete/{customer}', 'CustomerController@delete');
 Route::delete('/customers/delete/{customer}', 'CustomerController@destroy');
 
+// Route::get('assessments', array('as' => 'assessments', 'uses' => 'AssessmentController@index'));
 
 // Assessments
 Route::get('/assessments', 'AssessmentController@index')->name('assessments');

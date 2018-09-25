@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -13,10 +15,10 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                            <th scope="col">Job #</th>
+                            <th scope="col">@sortablelink('job_number', 'Job #')</th>
                             <th scope="col">Customer</th>
-                            <th scope="col">Created</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">@sortablelink('created_at','Created')</th>
+                            <th scope="col">@sortablelink('submitted','Status')</th>
                             <th scope="col">Edit</th>
                             </tr>
                         </thead>
@@ -62,6 +64,8 @@
                         @endforeach    
                         </tbody>
                         </table>
+                        {{ $assessments->links("pagination::bootstrap-4") }} 
+                        
                 </div>
                 </div>
             </div>

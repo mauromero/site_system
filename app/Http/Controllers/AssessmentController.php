@@ -58,8 +58,12 @@ class AssessmentController extends Controller
                 $queries['userName']=request('userName');
             }
 
+            
+
             $assessments = $assessments->paginate(5)->appends($queries);
             return view('forms.assessments.assessments_index', compact('assessments'));
+
+            
 
         }
 

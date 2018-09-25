@@ -1,9 +1,16 @@
 <?php
 
 namespace App;
+use Kyslik\ColumnSortable\Sortable;
 
 class Assessment extends Model
 {
+    use Sortable;
+    public $sortable = ['job_number',
+                        'submitted',
+                        'user_id',
+                        'created_at'];
+
     public function tasks(){
         return $this->hasMany(Task::class);
     }
