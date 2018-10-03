@@ -27,7 +27,7 @@ class AddForeignKeysToHazardTaskTable extends Migration
      */
     public function down()
     {
-        Schema::table('assessments', function(Blueprint $table)
+        Schema::table('hazard_task', function(Blueprint $table)
 		{
 			$table->dropForeign('fk_task_hazard_task');
 		});
