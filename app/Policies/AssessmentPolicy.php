@@ -17,9 +17,9 @@ class AssessmentPolicy
      * @param  \App\Assessment  $assessment
      * @return mixed
      */
-    public function view(User $user, Assessment $assessment)
+    public function view(User $user)
     {
-        return $user->role == 'admin' || $user->id==$assessment->user_id;
+      
     }
 
     /**
@@ -42,18 +42,18 @@ class AssessmentPolicy
      */
     public function update(User $user, Assessment $assessment)
     {
-        return $user->role == 'admin' || $user->id==$assessment->user_id;
+        return  $user->id==$assessment->user_id;
     }
 
     public function edit(User $user, Assessment $assessment)
     {
         // return $user->role == 'admin' || $user->id == $assessment->user_id;
-        return $user->role == 'admin' || $user->id == $assessment->user_id;
+        return  $user->id == $assessment->user_id;
     }
     
     public function edit_submitted(User $user, Assessment $assessment)
     {
-        return $user->role == 'admin' || $user->id == $assessment->user_id;
+        return $user->id == $assessment->user_id;
     }
 
     /**

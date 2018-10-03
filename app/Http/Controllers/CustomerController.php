@@ -36,7 +36,7 @@ class CustomerController extends Controller
             ]);
             
             $new_customer = Customer::create([
-                'company'=> request('name'),
+                'company'=> request('company'),
                 'name'=> request('name'),
                 'last_name'=> request('last_name'),
                 'phone'=> request('phone'),

@@ -18,7 +18,7 @@ class CreateAssessmentsTable extends Migration {
 			$table->dateTime('exp_date')->nullable();
 			$table->dateTime('start_date')->nullable();
 			$table->string('location', 255)->nullable();
-			$table->string('job_number', 45)->unique('job_number_UNIQUE')->nullable();
+			$table->string('job_number', 45)->nullable();
 			$table->string('medical_facility_name',65)->nullable();
 			$table->string('medical_facility_location',255)->nullable();
 			$table->string('emergency_phone', 45)->nullable();

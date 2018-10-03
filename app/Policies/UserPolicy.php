@@ -19,7 +19,7 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        return $user->role == 'admin';
+        return $user->role == 'admin' || $user->role == 'user';
     }
 
 

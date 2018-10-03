@@ -64,9 +64,8 @@
                                 <tr>
                                 <th scope="col">@sortablelink('job_number', 'Job #')</th>
                                 <th scope="col">@sortablelink('customer.company', 'Customer')</th>
-                                <th scope="col">User</th>
-                                <th scope="col">Created</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">@sortablelink('user.name', 'Name') | @sortablelink('user.last_name', 'Last')</th>
+                                <th scope="col">@sortablelink('created_at', 'Created')</th>
                                 <th scope="col">Edit</th>
                                 </tr>
                             </thead>
@@ -99,18 +98,7 @@
                                         {{ $assessment->created_at->format('m-d-y') }}
                                     </a>
                                 </td>
-                                <td>
-                                    <a href="/assessments/edit/{{ $assessment->id }}" >
-                                    @if($assessment->submitted)
-                                    <a href="/assessments/edit/{{ $assessment->id }}" >
-                                        Submitted
-                                    </a>
-                                    @else
-                                    <a href="/assessments/edit/{{ $assessment->id }}" >
-                                    Not Submitted
-                                    </a>
-                                    @endif
-                                </td>
+
                                 @if($assessment->submitted)
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
@@ -132,12 +120,11 @@
                            
                             </tbody>
                             </table>
-                            {!! $assessments->appends(\Request::except('page'))->render() !!}
+                            
                         </div>
 
                     <div class="pagination justify-content-center">
-                      {{ $assessments->links("pagination::bootstrap-4") }} 
-                      job_number
+                      {{ $assessments->appends(\Request::except('page'))->links("pagination::bootstrap-4") }}
                     </div>    
                 </div>
             </div>

@@ -17,7 +17,7 @@
                         <div class="col-lg-6">
                             <h2 class="text-center">Search Assessment</h2>
                             <p class="text-center">Search the list of assessments.</p>
-                            <p class="text-center"><a class="btn btn-success" href="/assessments" role="button">Assessments List &raquo;</a></p>
+                            <p class="text-center"><a class="btn btn-success" href="assessments" role="button">Assessments List &raquo;</a></p>
                         </div>
 
                     </div>
