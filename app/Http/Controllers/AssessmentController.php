@@ -180,11 +180,11 @@ class AssessmentController extends Controller
     {
             $assessment = Assessment::find($id);
             $user = auth()->user();
-
+/* If request is submitted */
             if($request->submit){
 
                 $this->validate(request(),[
-                    'job_number' => 'required|max:20|unique:assessments,job_number,'.$assessment->id,
+                    'job_number' => 'max:20|unique:assessments,job_number,'.$assessment->id,
                     'location' => 'required|max:255',
                     'gps_n' => 'required|max:15',
                     'gps_w' => 'required|max:15',
@@ -192,7 +192,7 @@ class AssessmentController extends Controller
                     'usa_marked' => 'required|max:45',
                     'emergency_phone' => 'required|max:20',
                     'kit_location' => 'required|max:255',
-                    'medical_facility_name' => 'required|required|max:65',
+                    'medical_facility_name' => 'required|required|max:255',
                     'medical_facility_location' => 'required|max:255',
                     'water_sources' => 'required|max:255',
                     'bleed_off' => 'required|max:255',
@@ -226,9 +226,10 @@ class AssessmentController extends Controller
                     return redirect('/users/forms');
                 }
             }
+        /* If request is Saved */
             elseif($request->save){
                 $this->validate(request(),[
-                    'job_number' => 'max:20|unique:assessments,job_number,'.$assessment->id,
+                    'job_number' => 'nullable|max:20|unique:assessments,job_number,'.$assessment->id,
                     'location' => 'max:255',
                     'gps_n' => 'max:15',
                     'gps_w' => 'max:15',
@@ -236,7 +237,7 @@ class AssessmentController extends Controller
                     'usa_marked' => 'max:45',
                     'emergency_phone' => 'max:20',
                     'kit_location' => 'max:255',
-                    'medical_facility_name' => 'max:65',
+                    'medical_facility_name' => 'max:255',
                     'medical_facility_location' => 'max:255',
                     'water_sources' => 'max:255',
                     'bleed_off' => 'max:255',

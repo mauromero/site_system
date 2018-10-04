@@ -55,7 +55,7 @@
                              <div class="form-group col-sm-4">
                                         <label for="job_number">Job Number</label>
                                         <div>
-                                            <input type="text" class="form-control" id="job_number" name="job_number"  placeholder="#"  value="{{ $assessment->job_number }}" >
+                                            <input type="text" class="form-control" id="job_number" name="job_number"  placeholder="#"  value="{{ old('job_number',$assessment->job_number) }}" >
                                         </div>
                                     </div>
 
@@ -77,103 +77,103 @@
                             <div class="form-group col-sm-6">
                                 <label for="start_date">Start Date</label>
                                 <div>
-                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ \Carbon\Carbon::parse($assessment->start_date)->toDateString()}}" >
+                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ old( 'start_date',\Carbon\Carbon::parse($assessment->start_date)->toDateString() ) }}" >
                                 </div>
                             </div>  
 
                             <div class="form-group col-sm-6">
                                 <label for="exp_date">Exp. Date</label>
                                 <div>
-                                    <input type="date" class="form-control" id="exp_date" name="exp_date" value="{{ \Carbon\Carbon::parse($assessment->exp_date)->toDateString()}}">
+                                    <input type="date" class="form-control" id="exp_date" name="exp_date" value="{{ old( 'exp_date',\Carbon\Carbon::parse($assessment->exp_date)->toDateString() ) }}">
                                 </div>
                             </div> 
 
                             <div class="form-group col-sm-12">
                                 <label for="location">Location</label>
-                                <textarea class="form-control" id="location" name="location" rows="3">{{ $assessment->location }}</textarea>
+                                <textarea class="form-control" id="location" name="location" rows="3">{{ old('location',$assessment->location) }}</textarea>
                             </div>
                             
                             <div class="form-group col-sm-6 ">
                                 <label for="gps_n">GPS Coordinates <strong>(N)</strong></label>
                                 <div>
-                                    <input type="text" class="form-control" id="gps_n" name="gps_n" value="{{ $assessment->gps_n }}"  placeholder="N coordinate" >
+                                    <input type="text" class="form-control" id="gps_n" name="gps_n" value="{{ old('gps_n',$assessment->gps_n) }}"  placeholder="N coordinate" >
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-6">
                                 <label for="gps_w">GPS Coordinates <strong>(W)</strong></label>
                                 <div>
-                                    <input type="text" class="form-control" id="gps_w" name="gps_w" value="{{ $assessment->gps_w }}"  placeholder="W coordinate"  >
+                                    <input type="text" class="form-control" id="gps_w" name="gps_w" value="{{ old('gps_w',$assessment->gps_w) }}"  placeholder="W coordinate"  >
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-6 ">
                                 <label for="usa_ticket">USA Ticket#</label>
                                 <div>
-                                    <input type="text" class="form-control" id="usa_ticket"  name="usa_ticket" value="{{ $assessment->usa_ticket }}"  placeholder="#" >
+                                    <input type="text" class="form-control" id="usa_ticket"  name="usa_ticket" value="{{ old('usa_ticket',$assessment->usa_ticket) }}"  placeholder="#" >
                                 </div>
                             </div>  
 
                             <div class="form-group col-sm-6 ">
                                 <label for="usa_marked">USA Marked</label>
                                 <div>
-                                    <input type="text" class="form-control" id="usa_marked"  name="usa_marked" value="{{ $assessment->usa_marked }}"  placeholder="#" >
+                                    <input type="text" class="form-control" id="usa_marked"  name="usa_marked" value="{{ old('usa_marked',$assessment->usa_marked) }}"  placeholder="#" >
                                 </div>
                             </div>  
 
                             <div class="form-group col-sm-6 ">
                                 <label for="emergency_phone">Emergency Phone #</label>
                                 <div>
-                                    <input type="text" class="form-control" id="emergency_phone" name="emergency_phone" value="{{ $assessment->emergency_phone }}"  placeholder="#" >
+                                    <input type="text" class="form-control" id="emergency_phone" name="emergency_phone" value="{{ old('emergency_phone',$assessment->emergency_phone) }}"  placeholder="#" >
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-6 ">
                                 <label for="kit_location">First Aid Kit Location</label>
                                 <div>
-                                    <input type="text" class="form-control" id="kit_location" name="kit_location" value="{{ $assessment->kit_location }}"  placeholder="Location" >
+                                    <input type="text" class="form-control" id="kit_location" name="kit_location" value="{{ old('kit_location',$assessment->kit_location) }}"  placeholder="Location" >
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-12">
                                 <label for="medical_facility_name">Nearest medical facility</label>
                                 <div>
-                                    <input type="text" class="form-control" id="medical_facility_name" name="medical_facility_name" value="{{ $assessment->medical_facility_name }}"  placeholder="Name" >
+                                    <input type="text" class="form-control" id="medical_facility_name" name="medical_facility_name" value="{{ old('medical_facility_name',$assessment->medical_facility_name) }}"  placeholder="Name" >
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-12">
                                 <label for="medical_facility_location">Medical facility location</label>
                                 <div>
-                                    <textarea class="form-control" id="medical_facility_location" name="medical_facility_location" rows="3">{{ $assessment->medical_facility_location }}</textarea>
+                                    <textarea class="form-control" id="medical_facility_location" name="medical_facility_location" rows="3">{{ old('medical_facility_location',$assessment->medical_facility_location) }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-12">
                                 <label for="water_services">Water Sources</label>
                                 <div>
-                                    <textarea class="form-control" id="water_sources" name="water_sources" rows="3">{{ $assessment->water_sources }}</textarea>
+                                    <textarea class="form-control" id="water_sources" name="water_sources" rows="3">{{ old('water_sources',$assessment->water_sources) }}</textarea>
                                 </div>
                             </div>    
 
                             <div class="form-group col-sm-12">
                                 <label for="bleed_off">Bleed Off</label>
                                 <div>
-                                    <textarea class="form-control" id="bleed_off" name="bleed_off" rows="3">{{ $assessment->bleed_off }}</textarea>
+                                    <textarea class="form-control" id="bleed_off" name="bleed_off" rows="3">{{ old('bleed_off',$assessment->bleed_off) }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-12">
                                 <label for="cutting">Cutting</label>
                                 <div>
-                                    <textarea class="form-control" id="cutting" name="cutting" rows="3">{{ $assessment->cutting }}</textarea>
+                                    <textarea class="form-control" id="cutting" name="cutting" rows="3">{{ old('cutting',$assessment->cutting) }}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group col-sm-12">
                                 <label for="test_hole">Test Hole</label>
                                 <div>
-                                    <textarea class="form-control" id="test_hole" name="test_hole" rows="3">{{ $assessment->test_hole }}</textarea>
+                                    <textarea class="form-control" id="test_hole" name="test_hole" rows="3">{{ old('test_hole',$assessment->test_hole) }}</textarea>
                                 </div>
                             </div>
 
@@ -182,7 +182,7 @@
                             </div>
                             <div class="form-group col-sm-6 text-center">
                             @if( !$assessment->submitted )
-                                <button type="submit" class="btn btn-primary pull-left" name="submit" value="submit">Submit Form</button>
+                                <button type="submit" class="btn btn-primary pull-left" name="submit" value="submit">Finish Job</button>
                                 @else
                                 <a href="/users/forms" class="btn btn-primary pull-left">Cancel</a>
                             @endif    
