@@ -77,14 +77,22 @@
                             <div class="form-group col-sm-6">
                                 <label for="start_date">Start Date</label>
                                 <div>
+                                @if( $assessment->start_date || old('start_date') )
                                     <input type="date" class="form-control" id="start_date" name="start_date" value="{{ old( 'start_date',\Carbon\Carbon::parse($assessment->start_date)->toDateString() ) }}" >
+                                @else
+                                    <input type="date" class="form-control" id="start_date" name="start_date" value="" >
+                                @endif 
                                 </div>
                             </div>  
 
                             <div class="form-group col-sm-6">
                                 <label for="exp_date">Exp. Date</label>
                                 <div>
-                                    <input type="date" class="form-control" id="exp_date" name="exp_date" value="{{ old( 'exp_date',\Carbon\Carbon::parse($assessment->exp_date)->toDateString() ) }}">
+                                @if( $assessment->exp_date || old('exp_date') )
+                                    <input type="date" class="form-control" id="exp_date" name="exp_date" value="{{ old( 'exp_date',\Carbon\Carbon::parse($assessment->exp_date)->toDateString() ) }}" >
+                                @else
+                                    <input type="date" class="form-control" id="exp_date" name="exp_date" value="" >
+                                @endif 
                                 </div>
                             </div> 
 
