@@ -22,6 +22,9 @@
                         <li class="list-group-item"><label>Address :&nbsp; </label>
                             <a href="https://maps.google.com/?q={{ $customer->address }}">{{ $customer->address }}</a>
                         </li>
+                        <li class="list-group-item"><label>Notes :&nbsp; </label>
+                            {{ $customer->notes }}
+                        </li>
                     </ul>
 
                 </div>

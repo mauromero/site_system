@@ -2,6 +2,13 @@
 
 @section('content')
 <div class="container">
+
+@if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
+    
     <div class="row">
         <div class="col-sm-12">
 
@@ -15,53 +22,61 @@
                         Edit Customer
                     </div>
                     <div class="card-body">
+                    @include('layouts.errors')
                         
                         <div class="form-group row">
                             <label class="col-sm-4" for="company">Company</label>
                             <div class="col-sm-8" >
-                                <input type="text" class="form-control" id="company" name="company"  value="{{ $customer->company }}" >
+                                <input type="text" class="form-control" id="company" name="company"  value="{{ old('company',$customer->company) }}" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-4" for="name">Name</label>
                             <div class="col-sm-8" >
-                                <input type="text" class="form-control" id="name" name="name"  value="{{ $customer->name }}" >
+                                <input type="text" class="form-control" id="name" name="name"  value="{{ old('name',$customer->name) }}" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-4" for="last_name">Last Name</label>
                             <div class="col-sm-8" >
-                                <input type="text" class="form-control" id="last_name" name="last_name"  value="{{ $customer->last_name }}" >
+                                <input type="text" class="form-control" id="last_name" name="last_name"  value="{{ old('last_name)',$customer->last_name) }}" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-4" for="phone">Phone</label>
                             <div class="col-sm-8" >
-                                <input type="text" class="form-control" id="phone" name="phone"  value="{{ $customer->phone }}" >
+                                <input type="text" class="form-control" id="phone" name="phone"  value="{{ old('phone',$customer->phone) }}" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-4" for="cellphone">Cellphone</label>
                             <div class="col-sm-8" >
-                                <input type="text" class="form-control" id="cellphone" name="cellphone"  value="{{ $customer->cellphone }}" >
+                                <input type="text" class="form-control" id="cellphone" name="cellphone"  value="{{ old('cellphone',$customer->cellphone) }}" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-4" for="email">Email</label>
                             <div class="col-sm-8" >
-                                <input type="text" class="form-control" id="email" name="email"  value="{{ $customer->email }}" >
+                                <input type="text" class="form-control" id="email" name="email"  value="{{ old('email',$customer->email) }}" >
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-sm-4" for="address">Address</label>
                             <div class="col-sm-8" >
-                                <textarea class="form-control" id="address" name="address" rows="3">{{ $customer->address }}</textarea>
+                                <textarea class="form-control" id="address" name="address" rows="3">{{ old('address',$customer->address) }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4" for="notes">Notes</label>
+                            <div class="col-sm-8" >
+                                <textarea class="form-control" id="notes" name="notes" rows="3">{{ old('notes',$customer->notes) }}</textarea>
                             </div>
                         </div>
 

@@ -31,8 +31,9 @@ class CustomerController extends Controller
         if( auth()->user() ){
 
             $this->validate(request(),[
-                'name' => 'required',
-                'last_name' => 'required',
+                'company' => 'required|max:255|unique',
+                'name' => 'required|max:255',
+                'last_name' => 'required|max:255'
             ]);
             
             $new_customer = Customer::create([
@@ -43,8 +44,7 @@ class CustomerController extends Controller
                 'cellphone'=> request('cellphone'),
                 'email'=> request('email'),
                 'address'=> request('address'),
-                'updated_at' => Carbon::now(),
-                'created_at' => Carbon::now()
+                'notes'=>request('notes')
             ]);
             return redirect('/customers');
         }else{
@@ -65,6 +65,18 @@ class CustomerController extends Controller
     }
 
     public function update(Request $request, $id){
+
+        $this->validate(request(),[
+            'company' => 'required|max:255|unique:customers,company,'.$id,
+            'name' => 'max:50',
+            'last_name' => 'max:45',
+            'phone' => 'max:45',
+            'cellphone' => 'max:45',
+            'email' => 'nullable|email|max:50',
+            'address' => 'max:255',
+            'notes' => 'max:1024'
+        ]);
+        
         if( auth()->user() ){
             $customer = Customer::find($id);
             $customer->name = request('name');
@@ -74,6 +86,7 @@ class CustomerController extends Controller
             $customer->email = request('email');
             $customer->address = request('address');
             $customer->company = request('company');
+            $customer->notes = request('notes');
             $customer->updated_at = Carbon::now();
             $customer->save(); 
             return redirect('/customers/'.$id);

@@ -72,6 +72,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label class="col-sm-4" for="address">Notes :</label>
+                            <div class="col-sm-8" >
+                                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card-footer">
                         <div class="form-group row">
