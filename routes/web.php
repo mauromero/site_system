@@ -14,7 +14,7 @@ Auth::routes();
 
 //Profile Controller
 Route::get('/users/profile', 'ProfileController@show')->name('profile');
-Route::get('/users/forms', 'ProfileController@index')->name('forms');
+Route::get('/users/forms', 'ProfileController@index')->name('userforms');
 
 
 // User
