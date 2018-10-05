@@ -34,6 +34,7 @@ class CustomerController extends Controller
                 'company' => 'required|max:255|unique:customers,company',
                 'name' => 'required|max:255',
                 'last_name' => 'required|max:255',
+                'email' => 'email|max:50'
             ]);
             
             $new_customer = Customer::create([
@@ -68,7 +69,7 @@ class CustomerController extends Controller
 
         $this->validate(request(),[
             'company' => 'required|max:255|unique:customers,company,'.$id,
-            'name' => 'max:50',
+            'name' => 'required|max:50',
             'last_name' => 'max:45',
             'phone' => 'max:45',
             'cellphone' => 'max:45',
