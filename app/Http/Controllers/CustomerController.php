@@ -30,10 +30,10 @@ class CustomerController extends Controller
     public function store(Request $request){
         if( auth()->user() ){
 
-            $this->validate(request(),[
-                'company' => 'required|max:255|unique',
+            $this->validate($request,[
+                'company' => 'required|max:255|unique:customers,company',
                 'name' => 'required|max:255',
-                'last_name' => 'required|max:255'
+                'last_name' => 'required|max:255',
             ]);
             
             $new_customer = Customer::create([

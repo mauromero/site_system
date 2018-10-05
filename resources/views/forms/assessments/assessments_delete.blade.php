@@ -30,13 +30,34 @@
                         <div class="row">
 
                             <div class="col-sm-12">
+                            @if($assessment->submitted)
+                            <div class="form-group form-check">
+                            <input class="form-check-input" type="checkbox" {{ $assessment->submitted ? 'checked' : '' }} name="submitted" id="submitted">
+                            <label class="form-check-label" for="submitted">
+                                Submitted
+                            </label>
+                            </div>  
+                                <p class="font-weight-bold"><label> &nbsp;</label>{{ $assessment->created_at->toFormattedDateString()}}</p>
+                                <p class="font-weight-bold"><label> By: &nbsp;</label>{{ $assessment->user->name }}&nbsp;{{ $assessment->user->last_name }}  </p>
+                                @else
                                 <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
-                                <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}  </p>
+                                <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ $assessment->user->name }}&nbsp;{{ $assessment->user->last_name }}  </p>
+                            @endif    
                             </div>
 
                         </div>
                         </div>
                     </div>
+
+                    @if($assessment->image_name)    
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <img class="img-fluid rounded " alt="location image" src="/storage/locations/{{ $assessment->image_name}}"> 
+                            </div>
+                        </div>
+                    </div>
+                    @endif 
 
 
                             <div class="form-row">

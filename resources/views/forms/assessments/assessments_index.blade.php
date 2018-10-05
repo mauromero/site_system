@@ -99,12 +99,7 @@
                                     </a>
                                 </td>
 
-                                @if($assessment->submitted)
-                                <td>
-                                    <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
-                                        View</a>
-                                </td>
-                                @else
+                                @if( Auth::user()->role == 'admin' || $assessment->user->id == Auth::user()->id )
                                 
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
@@ -113,6 +108,11 @@
                                         Delete
                                     </a>
                                 </td>
+                                @else
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
+                                        View</a>
+                                    </td>
                                 @endif
                                 </tr>
                                 

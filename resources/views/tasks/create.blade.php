@@ -35,7 +35,7 @@
                                 <div class="row" >
                                     <div class="col-sm-8">
                                         <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ \Carbon\Carbon::now()->format('m/d/Y')}}</p>
-                                        <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ Auth::user()->name }}&nbsp;{{ Auth::user()->last_name }}  </p>
+                                        <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ $assessment->user->name }}&nbsp;{{ $assessment->user->last_name }}  </p>
                                     </div>
                                 </div>
 

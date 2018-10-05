@@ -144,27 +144,26 @@ class AssessmentController extends Controller
      */
     public function edit(Assessment $assessment)
     {
-
         $user = auth()->user();
         $assessment = Assessment::find($assessment->id);
-        if (  $user->can('edit',$assessment)){
+        $customers = Customer::all();
+        $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+        $hazards = Hazard::orderBy('name', 'asc')->get();
+        $tasks_hazards = hazard_task::all();
+
+        if (  $user->can('edit',$assessment )){
             if ( $assessment->submitted){
-                $customers = Customer::all();
-                $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
-                $hazards = Hazard::orderBy('name', 'asc')->get();
-                $tasks_hazards = hazard_task::all();
                 
                 if($user->can('edit_submitted',$assessment)){
                     return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
                 }else{
-                    return view('forms.assessments.assessments_submitted', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
+                    return view('forms.assessments.assessments_preview', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
                 }
             }else{
-                $customers = Customer::all();
                 return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
             }
         }else{
-            return redirect('/home');
+            return view('forms.assessments.assessments_preview', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
         }  
    
     }
@@ -292,7 +291,7 @@ class AssessmentController extends Controller
     {
         if(auth()->user()){
             $assessment = Assessment::find($id);
-            if ( $assessment->user_id == auth()->user()->id){
+            if ( $assessment->user_id == auth()->user()->id || auth()->user()->role == 'admin'){
                 $customers = Customer::all();
                 $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
                 $hazards = Hazard::orderBy('name', 'asc')->get();
@@ -311,7 +310,7 @@ class AssessmentController extends Controller
     {
         if(auth()->user()){
             $assessment = Assessment::find($id);
-            if ( $assessment->user_id == auth()->user()->id){
+            if ( $assessment->user_id == auth()->user()->id || auth()->user()->role == 'admin'){
                 if($assessment->image_name){
                     Storage::disk('public')->delete('locations/'.$assessment->image_name);
                 }

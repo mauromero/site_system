@@ -22,21 +22,36 @@
 
                             <div class="row">
                                 <div class="col-sm-6">
+                                    @if( $assessment->submitted)
                                     <div class="form-check">
-                                    <input class="form-check-input" type="checkbox"  value="" id="defaultCheck2" checked disabled>
-                                    <label class="form-check-label" for="defaultCheck2">
-                                        Submitted&nbsp;</label>
-                                    </label>
+                                        <input class="form-check-input" type="checkbox"  value="" id="submitted" checked disabled>                             
+                                        <label class="form-check-label" for="submitted">
+                                            Submitted&nbsp;</label>
+                                        </label>
                                     </div>
+                                    @endif 
                                     <p>{{ $assessment->created_at}}</p>
                                     <p>User:&nbsp;<span class="font-weight-bold">{{ $assessment->user->name }}&nbsp;{{ $assessment->user->last_name }}</span> </p>
+                                    @if($assessment->customer)
                                     <p>Customer: <span class="font-weight-bold">{{ $assessment->customer->name }} {{ $assessment->customer->last_name }}</span></p>
+                                    @else
+                                    <p>Customer: Undefined</p>
+                                    @endif
+
                                     
                                 </div>
                                 <div class="col-sm-6">    
                                     <p>Job Number: <span class="font-weight-bold">{{ $assessment->job_number }}</span></p>
-                                    <p>Start Date: <span class="font-weight-bold">{{ \Carbon\Carbon::parse($assessment->start_date)->format('m/d/Y') }}</span></p>
+                                    @if( $assessment->start_date)
+                                    <p>Start Date: <span class="font-weight-bold">{{ \Carbon\Carbon::parse($assessment->exp_date)->format('m/d/Y') }}</span></p>
+                                    @else
+                                    <p>Start Date: <span class="font-weight-bold">Undefined</span></p>
+                                    @endif 
+                                    @if( $assessment->exp_date)
                                     <p>Exp. Date: <span class="font-weight-bold">{{ \Carbon\Carbon::parse($assessment->exp_date)->format('m/d/Y') }}</span></p>
+                                    @else
+                                    <p>Start Date: <span class="font-weight-bold">Undefined</span></p>
+                                    @endif 
                                 </div>
                             </div>
                         </div>
@@ -134,18 +149,12 @@
                 </div>
                 
                     <div class="card-footer text-right">
-                        <form method="POST" action="/assessments/delete/{{ $assessment->id }}">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <div class="form-group row">
-                                <div class="col-sm-6 text-left">
-                                    <button type="submit" class="btn btn-danger d-print-none">Delete</button>
-                                </div>
+
                                 <div class="col-sm-6 text-right">
-                                <a href="/users/forms" class="btn btn-primary d-print-none">My Forms</a>
+                                <a href="{{ URL::previous() }}" class="btn btn-primary d-print-none">Back</a>
                                 </div>
-                            </div>
-                        </form>
+
+
                     </div>
                 
             </div>
