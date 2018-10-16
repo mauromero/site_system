@@ -7,21 +7,13 @@
             <div class="card">
                 <div class="card-header bg-primary text-white">Dashboard</div>
                 <div class="card-body text-center">
-                    <div class="card-columns">
+                    <div class="card-group">
 
                         <div class="card">
                             <div class="card-header">Customers</div>
                             <div class="card-body">
                                 <p class="text-center">Manage the list customers</p>
                                 <p class="text-center"><a class="btn btn-success" href="customers" role="button">Customers</a></p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">My Assessments</div>
-                            <div class="card-body">
-                                <p class="text-center">List of my assessment forms</p>
-                                <p class="text-center"><a class="btn btn-success" href="{{ route('userforms') }}" role="button">My Forms</a></p>
                             </div>
                         </div>
 

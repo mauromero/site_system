@@ -42,18 +42,17 @@ class AssessmentPolicy
      */
     public function update(User $user, Assessment $assessment)
     {
-        return  $user->id==$assessment->user_id || $user->role=='admin';
+        return  $user->role=='user' || $user->role=='admin';
     }
 
     public function edit(User $user, Assessment $assessment)
     {
-        // return $user->role == 'admin' || $user->id == $assessment->user_id;
-        return  $user->id == $assessment->user_id || $user->role=='admin';
+        return  $user->role=='user' || $user->role=='admin';
     }
     
     public function edit_submitted(User $user, Assessment $assessment)
     {
-        return $user->id == $assessment->user_id || $user->role=='admin';
+        return  $user->role=='user' || $user->role=='admin';
     }
 
     /**

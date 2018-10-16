@@ -46,9 +46,9 @@
                             <td>
                                 <a href="/assessments/edit/{{ $assessment->id }}" >
                                 @if ($assessment->submitted)
-                                    Submitted
+                                    Completed
                                 @else
-                                    <strong>Not Submitted</strong>
+                                    In Progress
                                 @endif    
                                 </a>
                             </td>

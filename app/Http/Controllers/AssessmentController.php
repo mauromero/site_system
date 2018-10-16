@@ -152,20 +152,10 @@ class AssessmentController extends Controller
         $tasks_hazards = hazard_task::all();
 
         if (  $user->can('edit',$assessment )){
-            if ( $assessment->submitted){
-                
-                if($user->can('edit_submitted',$assessment)){
-                    return view('forms.assessments.assessments_edit', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
-                }else{
-                    return view('forms.assessments.assessments_preview', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
-                }
-            }else{
-                return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
-            }
+            return view('forms.assessments.assessments_edit', compact('assessment', 'customers'));
         }else{
             return view('forms.assessments.assessments_preview', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
         }  
-   
     }
 
     /**
@@ -217,10 +207,10 @@ class AssessmentController extends Controller
                     $assessment->cutting = request('cutting');
                     $assessment->test_hole = request('test_hole');
                     $assessment->customer_id = request('customer_id');
-                    $assessment->submitted = true;
+                    $assessment->created_at = $assessment->created_at;
                     $assessment->updated_at = Carbon::now();
-                    
-                    $assessment->created_at == null ? $assessment->created_at = Carbon::now() : $assessment->created_at;
+                    $assessment->submitted = true;
+                    $assessment->submitted_at = Carbon::now();
                     $assessment->save(); 
                     return redirect('/users/forms');
                 }
@@ -263,7 +253,7 @@ class AssessmentController extends Controller
                     $assessment->test_hole = request('test_hole');
                     $assessment->customer_id = request('customer_id');
                     $assessment->updated_at = Carbon::now();
-                    $request->submitted==null ? $assessment->submitted = false : $assessment->submitted = true;
+                    $assessment->submitted = request('submitted');
                     $assessment->save();
                     if(Gate::allows('isAdmin')){
                         return redirect('assessments');

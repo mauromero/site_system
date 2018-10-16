@@ -20,37 +20,40 @@
 
         <div class="card">
             <div class="card-body">
-
-                    <div class="card bg-light mb-3" >
+            <form method="POST" action="/assessments/edit/{{ $assessment->id }}">
+                            {{ csrf_field() }}
+                            {{ method_field('PATCH') }}
+                    <div class="card bg-light mb-2" >
                         <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12">
-                            @if($assessment->submitted)
-                            <div class="form-group form-check">
-                            <input class="form-check-input" type="checkbox" {{ $assessment->submitted ? 'checked' : '' }} name="submitted" id="submitted">
-                            <label class="form-check-label" for="submitted">
-                                Submitted
-                            </label>
-                            </div>  
-                                <p class="font-weight-bold"><label> &nbsp;</label>{{ $assessment->created_at->toFormattedDateString()}}</p>
-                                <p class="font-weight-bold"><label> By: &nbsp;</label>{{ $assessment->user->name }}&nbsp;{{ $assessment->user->last_name }}  </p>
-                                @else
-                                <p class="font-weight-bold"><label> Date :&nbsp;</label>{{ Carbon\Carbon::now()->toFormattedDateString()}}</p>
-                                <p class="font-weight-bold"><label> User Name :&nbsp;</label>{{ $assessment->user->name }}&nbsp;{{ $assessment->user->last_name }}  </p>
-                            @endif    
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label> Created by :&nbsp;</label>{{ $assessment->user->name }}&nbsp;{{ $assessment->user->last_name }}<br/>
+                                        <label> Created date:&nbsp;</label>{{ $assessment->created_at->toFormattedDateString() }}<br/>                             
+                                        <label> Updated date:&nbsp;</label>{{ $assessment->updated_at->toFormattedDateString() }}<br/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @if($assessment->submitted)
+                                        <div class="form-group form-check">                            
+                                            <input class="form-check-input is-valid" type="checkbox" name="submitted" id="submitted"  value="1" checked>
+                                        <label class="form-check-label" for="submitted">
+                                            Completed
+                                        </label>
+                                        </div> 
+                                        <label> Completed date:&nbsp;</label>{{ $assessment->submitted_at->toFormattedDateString() }}
+                                        @else
+                                        <button type="submit" class="btn btn-primary pull-left" name="submit" value="submit">Mark as complete</button>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         </div>
                     </div>
 
-                <form method="POST" action="/assessments/edit/{{ $assessment->id }}">
-                            {{ csrf_field() }}
-                            {{ method_field('PATCH') }}
-
-
-
-                        <div class="form-row">
-
+               
+                       <div class="form-row">
                              <div class="form-group col-sm-4">
                                         <label for="job_number">Job Number</label>
                                         <div>
@@ -188,11 +191,7 @@
                                 <button type="submit" class="btn btn-success pull-right" name="save" value="save">Save Changes</button>
                             </div>
                             <div class="form-group col-sm-6 text-center">
-                            @if( !$assessment->submitted )
-                                <button type="submit" class="btn btn-primary pull-left" name="submit" value="submit">Finish Job</button>
-                                @else
-                                <a href="/users/forms" class="btn btn-primary pull-left">Cancel</a>
-                            @endif    
+                                <a href="{{ URL::previous() }}" class="btn btn-primary pull-left">Cancel</a>
                             </div>
                             
                         </div>

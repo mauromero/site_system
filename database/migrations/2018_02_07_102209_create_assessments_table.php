@@ -24,7 +24,6 @@ class CreateAssessmentsTable extends Migration {
 			$table->string('emergency_phone', 45)->nullable();
 			$table->string('gps_n', 45)->nullable();
 			$table->string('gps_w', 45)->nullable();
-			$table->integer('customer_id')->index('fk_assessment_customers_idx')->nullable();
 			$table->string('usa_ticket', 45)->nullable();
 			$table->string('usa_marked', 45)->nullable();
 			$table->string('kit_location', 500)->nullable();
@@ -34,8 +33,10 @@ class CreateAssessmentsTable extends Migration {
 			$table->string('test_hole', 500)->nullable();
 			$table->string('image_name', 45)->nullable();
 			$table->integer('progress')->default(0)->nullable();
-			$table->boolean('submitted')->default(false)->nullable();
 			$table->integer('user_id')->index('fk_assessment_user_idx');
+			$table->integer('customer_id')->index('fk_assessment_customers_idx')->nullable();
+			$table->boolean('submitted')->default(false)->nullable();
+			$table->timestamp('submitted_at')->nullable();
 			$table->timestamps();
 		});
 	}

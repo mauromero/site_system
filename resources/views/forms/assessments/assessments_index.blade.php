@@ -20,8 +20,6 @@
                     </div>  
                 </form>
 
-
-
                 <form action="/assessments" method="get">
                 <div class="form-row align-items-center mb-2">
                 <div class="col">
@@ -34,7 +32,6 @@
                 </div>  
                 </form>
 
-
                 <form action="/assessments" method="get">
                 <div class="form-row align-items-center mb-2">
                 <div class="col">
@@ -46,10 +43,7 @@
                 </div> 
                 </div> 
                 </form>
-
-
-
-                
+               
                     <div>
                         <!-- Filter: -->
                         <!-- <a href="/assessments?submitted=0">Not Submitted</a> | 
@@ -66,6 +60,7 @@
                                 <th scope="col">@sortablelink('customer.company', 'Customer')</th>
                                 <th scope="col">@sortablelink('user.name', 'Name') | @sortablelink('user.last_name', 'Last')</th>
                                 <th scope="col">@sortablelink('created_at', 'Created')</th>
+                                <th scope="col">@sortablelink('submitted', 'Status')</th>
                                 <th scope="col">Edit</th>
                                 </tr>
                             </thead>
@@ -98,9 +93,18 @@
                                         {{ $assessment->created_at->format('m-d-y') }}
                                     </a>
                                 </td>
+                                    
+                                <td>
+                                    <a href="/assessments/edit/{{ $assessment->id }}" >
+                                    @if( $assessment->submitted )
+                                        Completed
+                                    @else
+                                        In Progress
+                                    @endif
+                                    </a>
+                                </td>
 
-                                @if( Auth::user()->role == 'admin' || $assessment->user->id == Auth::user()->id )
-                                
+                                @if( Auth::user()->role == 'admin' || Auth::user()->role == 'user'  )
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
                                         Edit</a>
@@ -108,11 +112,6 @@
                                         Delete
                                     </a>
                                 </td>
-                                @else
-                                    <td>
-                                        <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
-                                        View</a>
-                                    </td>
                                 @endif
                                 </tr>
                                 

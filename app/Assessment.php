@@ -11,6 +11,8 @@ class Assessment extends Model
                         'user_id',
                         'created_at'];
 
+   protected $dates = ['submitted_at'];    
+
     public function tasks(){
         return $this->hasMany(Task::class);
     }
