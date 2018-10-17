@@ -58,6 +58,15 @@ class AssessmentController extends Controller
                 $queries['userName']=request('userName');
             }
 
+            if(request()->submitted==0){
+                $assessments = Assessment::where('submitted',0);           
+                $queries['submitted']=request('submitted');
+            }
+            if(request()->submitted==1){
+                $assessments = Assessment::where('submitted',1);           
+                $queries['submitted']=request('submitted');
+            }
+
             
 
             $assessments = $assessments->sortable(['created_at' => 'desc'])->paginate(5)->appends($queries);
