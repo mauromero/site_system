@@ -12,7 +12,8 @@ class CustomerController extends Controller
 
     public function index(){
         if( auth()->user() ){
-            $customers = Customer::all();
+            $queries = [];
+            $customers = Customer::sortable(['company' => 'asc'])->paginate(5)->appends($queries);
             return view('customers.index',compact ('customers'));
         }else{
             return redirect('/home');

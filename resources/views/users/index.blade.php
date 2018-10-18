@@ -14,11 +14,10 @@
                             <table class="table table-hover">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Last Name</th>
+                                        <th scope="col">@sortablelink('name','Name')</th>
+                                        <th scope="col">@sortablelink('last_name','Last Name')</th>
                                         @if(Auth::user()->role == 'admin')  
-                                        <th scope="col">Role</th>
+                                        <th scope="col">@sortablelink('role','Role')</th>
                                         @endif
                                         <th scope="col">Action</th>
                                     </tr>
@@ -26,11 +25,6 @@
                                 <tbody>  
                                     @foreach ($users as $user)
                                     <tr>
-                                        <td>
-                                            <a href="/users/{{ $user->id }}" >
-                                                {{ $loop->iteration }}
-                                            </a>
-                                        </td>
                                         <td>
                                             <a href="/users/{{ $user->id }}" >
                                                 {{ $user->name }} 
@@ -55,6 +49,8 @@
                                 </tbody>
                             </table>
                         </div>
+                        {{ $users->appends(\Request::except('page'))->links("pagination::bootstrap-4") }}
+
 
                     </div>
                 </div>

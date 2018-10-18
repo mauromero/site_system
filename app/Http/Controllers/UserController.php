@@ -22,7 +22,8 @@ class UserController extends Controller
     {
         $user = auth()->user();
         if($user->can('view',$user)){
-            $users=User::orderBy('last_name', 'asc')->get();
+            $queries=[];
+            $users=User::sortable(['last_name' => 'asc'])->paginate(3)->appends($queries);
             return view('users.index', compact('users'));
         }else{
             return redirect('home');

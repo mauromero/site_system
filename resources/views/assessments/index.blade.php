@@ -16,7 +16,7 @@
                         <thead>
                             <tr>
                             <th scope="col">@sortablelink('job_number', 'Job #')</th>
-                            <th scope="col">Customer</th>
+                            <th scope="col">@sortablelink('customer.company','Customer')</th>
                             <th scope="col">@sortablelink('created_at','Created')</th>
                             <th scope="col">@sortablelink('submitted','Status')</th>
                             <th scope="col">Edit</th>
@@ -34,7 +34,7 @@
                             <td>
                                 @if ($assessment->customer)
                                 <a href="/assessments/edit/{{ $assessment->id }}" >
-                                    {{ $assessment->customer->name}}&nbsp;{{ $assessment->customer->last_name}}
+                                    {{ $assessment->customer->company}}
                                 </a> 
                                 @endif
                             </td>
@@ -64,11 +64,11 @@
                         @endforeach    
                         </tbody>
                         </table>
-                        {{ $assessments->links("pagination::bootstrap-4") }} 
                         
+                    </div>
+                    {{ $assessments->appends(\Request::except('page'))->links("pagination::bootstrap-4") }}
+                    </div>
                 </div>
-                </div>
-            </div>
             </div>
         </div>      
     </div>      

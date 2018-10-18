@@ -83,11 +83,12 @@
                     </div>
                     <div class="card-footer">
                         <div class="form-group row">
-                            <div class="col-sm-6">
-                                <button type="submit" class="btn btn-success ">Save</button>
+                            <div class="col-sm-8">
+                                <button type="submit" class="btn btn-success">&nbsp;Save&nbsp;</button>
                             </div>
-                            <div class="col-sm-6 text-right">
+                            <div class="col-sm-4 text-right">
                                 <a href="/customers"  class="btn btn-primary">Cancel</a>
+                                <a href="/customers/delete/{{ $customer->id }}" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     </div>
