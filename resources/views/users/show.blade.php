@@ -26,14 +26,15 @@
                         <li class="list-group-item"><label>Name :&nbsp; </label>{{ $user->name }}</li>
                         <li class="list-group-item"><label>Last Name :&nbsp; </label>{{ $user->last_name }}</li>
                         <li class="list-group-item"><label>Email :&nbsp; </label>{{ $user->email }}</li>
-                        <li class="list-group-item"><label>Phone :&nbsp; </label>{{ $user->phone }}</li>
-                        <li class="list-group-item"><label>User Type :&nbsp; </label>{{ $user->role }}</li>
-
+                        <li class="list-group-item" style="white-space: pre-line;"><label>Phone :&nbsp; </label>{{ $user->phone }}</li>
+                        <li class="list-group-item" style="white-space: pre-line;"><label>Description :&nbsp; </label><br/>{{ $user->description }}</li>
                     </ul>
 
                 </div>
                 <div class="card-footer text-center">
+                @if(Auth::user()->role == 'admin') 
                     <a href="/users/edit/{{ $user->id }}" class="btn btn-primary">Edit</a>
+                @endif    
                     <a href="/users" class="btn btn-primary">Back</a>
                 </div>
             </div>

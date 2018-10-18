@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $user = auth()->user();
         if($user->can('view',$user)){
-            $users=User::orderBy('last_name', 'desc')->get();
+            $users=User::orderBy('last_name', 'asc')->get();
             return view('users.index', compact('users'));
         }else{
             return redirect('home');
@@ -94,13 +94,22 @@ class UserController extends Controller
     {
         $auth_user = auth()->user();
         if($auth_user->can('update', $user)){
+
             $user=User::find($user->id);
             $user->name = request('name');
             $user->last_name = request('last_name');
             $user->phone = request('phone');
             $user->email = request('email');
-            $user->role = request('role');
-            $request->active==null ? $user->active = false : $user->active = true;
+            $user->description = request('description');
+
+            if($auth_user->role!=='admin'){
+                $user->role = $user->role;
+                $user->active = $user->active;
+            }else{
+                $user->role= request('role');
+                !$request->active ? $user->active = false : $user->active = true;
+            }
+           
             $user->save();
             return redirect('users');
 

@@ -44,7 +44,17 @@
                                 <input type="text" class="form-control" id="email" name="email"  value="{{ $user->email }}" >
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4" for="email">Description</label>
+                            <div class="col-sm-8" >
+                                <textarea class="form-control" id="description" name="description" rows="4">{{ $user->description }}</textarea>
+                            </div>
+                        </div>
+
+                    
                         <hr>   
+                        @if(Auth::user()->role == 'admin') 
                         <div class="form-group form-check">
                             <input class="form-check-input" type="checkbox" {{ $user->active ? 'checked' : '' }} name="active" id="active">
                             <label class="form-check-label" for="active">
@@ -63,6 +73,8 @@
                             </div>
                         </div>
 
+                        @endif    
+
                     </div>
                     <div class="card-footer">
                         <div class="form-group row">
@@ -70,7 +82,7 @@
                                 <button type="submit" class="btn btn-success ">Save</button>
                             </div>
                             <div class="col-sm-6 text-right">
-                                <a href="/users"  class="btn btn-primary">Cancel</a>
+                                <a href="{{ URL::previous() }}"  class="btn btn-primary">Cancel</a>
                             </div>
                         </div>
                     </div>

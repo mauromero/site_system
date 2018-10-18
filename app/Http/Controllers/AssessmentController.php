@@ -62,6 +62,7 @@ class AssessmentController extends Controller
                 $assessments = Assessment::where('submitted',0);           
                 $queries['submitted']=request('submitted');
             }
+
             if(request()->submitted==1){
                 $assessments = Assessment::where('submitted',1);           
                 $queries['submitted']=request('submitted');
@@ -125,7 +126,8 @@ class AssessmentController extends Controller
             'test_hole'=> request('test_hole'),
             'user_id'=> $user_id,
             'customer_id'=> request('customer_id'),
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now(),
+            'submitted' =>false
          ]);
   
          return redirect('/assessments/edit/'.$newAssessment->id);
@@ -221,7 +223,7 @@ class AssessmentController extends Controller
                     $assessment->submitted = true;
                     $assessment->submitted_at = Carbon::now();
                     $assessment->save(); 
-                    return redirect('/users/forms');
+                    return redirect('assessments');
                 }
             }
         /* If request is Saved */
@@ -262,12 +264,13 @@ class AssessmentController extends Controller
                     $assessment->test_hole = request('test_hole');
                     $assessment->customer_id = request('customer_id');
                     $assessment->updated_at = Carbon::now();
-                    $assessment->submitted = request('submitted');
+                    request('submitted') ? $request_submitted=true: $request_submitted=false;
+                    $assessment->submitted = $request_submitted;
                     $assessment->save();
                     if(Gate::allows('isAdmin')){
                         return redirect('assessments');
                     }else{
-                        return redirect('/users/forms');
+                        return redirect('assessments');
                     }
                 }else{
                     return redirect('/home');

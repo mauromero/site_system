@@ -41,9 +41,9 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $auth_user, User $user)
     {
-        return $user->role == 'admin';
+        return $auth_user->role == 'admin' || $auth_user->id == $user->id;
     }
 
     /**

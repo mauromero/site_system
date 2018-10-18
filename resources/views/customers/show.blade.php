@@ -19,10 +19,10 @@
                         <li class="list-group-item"><label>Phone :&nbsp; </label>{{ $customer->phone }}</li>
                         <li class="list-group-item"><label>Cellphone :&nbsp; </label>{{ $customer->cellphone }}</li>
                         <li class="list-group-item"><label>Email :&nbsp; </label>{{ $customer->email }}</li>
-                        <li class="list-group-item"><label>Address :&nbsp; </label>
-                            <a href="https://maps.google.com/?q={{ $customer->address }}">{{ $customer->address }}</a>
+                        <li class="list-group-item" style="white-space: pre-line;"><label>Address :&nbsp; </label>
+                            <a href="https://maps.google.com/?q={{ $customer->address }}" target="_blank">{{ $customer->address }}</a>
                         </li>
-                        <li class="list-group-item"><label>Notes :&nbsp; </label>
+                        <li class="list-group-item" style="white-space: pre-line;"><label>Notes :&nbsp; </label>
                             {{ $customer->notes }}
                         </li>
                     </ul>
