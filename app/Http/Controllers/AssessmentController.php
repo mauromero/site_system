@@ -58,14 +58,14 @@ class AssessmentController extends Controller
                 $queries['userName']=request('userName');
             }
 
-            if(request()->submitted==0){
+            if(request()->has('submitted') && request()->submitted==0){
                 $assessments = Assessment::where('submitted',0);           
-                $queries['submitted']=request('submitted');
+                $queries['submitted']=0;
             }
 
-            if(request()->submitted==1){
+            if(request()->has('submitted') && request()->submitted==1){
                 $assessments = Assessment::where('submitted',1);           
-                $queries['submitted']=request('submitted');
+                $queries['submitted']=1;
             }
 
             
@@ -89,7 +89,7 @@ class AssessmentController extends Controller
     public function create()
     {
         if( auth()->user() ){
-            $customers = Customer::orderBy('name', 'asc')->get();
+            $customers = Customer::orderBy('company', 'asc')->get();
             return view('forms.assessments.assessments_create', compact('customers') );
         }else{
             return redirect('/home');
@@ -157,7 +157,7 @@ class AssessmentController extends Controller
     {
         $user = auth()->user();
         $assessment = Assessment::find($assessment->id);
-        $customers = Customer::all();
+        $customers = Customer::orderBy('company', 'asc')->get();
         $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
         $hazards = Hazard::orderBy('name', 'asc')->get();
         $tasks_hazards = hazard_task::all();

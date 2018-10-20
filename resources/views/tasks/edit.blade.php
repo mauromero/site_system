@@ -9,43 +9,99 @@
     </div>
 @endif
 @include('layouts.errors')
-
-
     <nav class="nav nav-tabs">
         <a class="nav-item nav-link border-primary" href="/assessments/edit/{{ $assessment->id }}">Form</a>
         <a class="nav-item nav-link border-primary text-white bg-primary" href="/assessments/{{ $task->assessment_id }}/tasks">Tasks</a>
         <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/image">Image</a>
     </nav> 
-
     <div class="row">
         <div class="col-sm-12">
-                
+<!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-light">
+                <li class="breadcrumb-item"><a href="/assessments/edit/{{ $assessment->id }}">Assessment</a></li>
+                <li class="breadcrumb-item"><a href="/assessments/{{ $task->assessment_id }}/tasks">Tasks</a></li>
+                <li class="breadcrumb-item active" aria-current="page"> {{ $task->name }} </li>
+            </ol>
+        </nav>
         <div class="card">
+            <div class="card-header bg-primary text-white border-primary">     
+                Editing task : {{ $task->name }} 
+            </div>
             <div class="card-body">
-<!-- FORM -->            
+            <p>Rename the task by changing the name and pressing the button "Rename"</p>
+<!-- RENAME TASK FORM -->            
                 <form  class="form-row align-items-center" method="POST" action="/tasks/rename/{{ $task->id }}">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
                     
-                    <div class="col-sm-10">
+                    <div class="col-sm-8">
                         <label for="name" class="sr-only">Task Name</label>
                         <input type="text" class="form-control" id="name" name="name"  value="{{ $task->name  }}" >
                     </div>
-                    <div class="col-sm-2 text-right">
+                    <div class="col-sm-4 text-right">
                         <button type="submit" class="btn btn-success">Rename</button>
+                        <a href ="/tasks/delete/{{ $task->id }}" class="btn btn-danger">Delete</a>
                     </div>                                                        
                 </form> 
-
-                <div class="card bg-light border-primary mt-3">
-                    <div class="card-header">New hazard</div>   
-                    <div class="card-body "> 
-                                                           
-<!-- FORM -->
+                <hr>
+                <!-- Button trigger modal -->
+                <div class="text-right">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#hazardModal">
+                + Add task hazard
+                </button>
+                </div>
+<!-- HAZARDS LIST TABLE -->
+                @if(!$tasks_hazards->isEmpty())
+                    <div class="card mt-3 border-primary">
+                        <div class="card-header bg-primary text-white">
+                        Hazards for task : {{ $task->name }} 
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="bg-light">
+                                        <tr>
+                                        <th scope="col">Hazard</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Measure</th>
+                                        <th scope="col">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>              
+                                        @foreach ($tasks_hazards as $hazard)
+                                        <tr>
+                                        <th  scope="row">{{ $hazards->find($hazard->hazard_id)->name }}</th>
+                                        <td>{{ $hazard->hazard }}</td>
+                                        <td>{{ $hazard->measure }}</td>
+                                        <td><a href="/hazards_tasks/edit/{{ $hazard->id }}" class="btn btn-sm btn-primary">Edit hazard</a></td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+        </div>
+    </div>
+            <!-- Modal -->
+            <div class="modal fade" id="hazardModal" tabindex="-1" role="dialog" aria-labelledby="hazardModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="hazardModalLabel">New Hazard</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- FORM -->
                         <form method="POST" action="/hazards_tasks">
-                        {{ csrf_field() }}
-
-                        <input name="task_id" type="hidden" value="{{ $task->id }}">
-
+                            {{ csrf_field() }}
+                            <input name="task_id" type="hidden" value="{{ $task->id }}">
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label" for="hazard_id">Select Hazard Type</label>
                                 <div class="col-sm-8">
@@ -57,8 +113,6 @@
                                     </select>
                                 </div>
                             </div>
-
-
                             <div class="form-group row">
                                 <label class="col-sm-4" for="hazard">Hazard Description</label>
                                 <div class="col-sm-8" >
@@ -75,51 +129,12 @@
                             <button type="submit" class="btn btn-success ">+ Add hazard</button>
                             </div>
                         </form>
-
-                    </div>        
-                </div>
-<!-- TABLE -->
-                @if(!$tasks_hazards->isEmpty())
-
-                    <div class="card mt-3 border-primary">
-                        <div class="card-header bg-primary text-white">
-                            <h5> {{ $task->name }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                        
-                                <table class="table table-hover">
-                                    <thead class="bg-light">
-                                        <tr>
-                                        <th scope="col">Hazard</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Measure</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>              
-                                        @foreach ($tasks_hazards as $hazard)
-                                        <tr>
-                                        <th  scope="row">{{ $hazards->find($hazard->hazard_id)->name }}</th>
-                                        <td>{{ $hazard->hazard }}</td>
-                                        <td>{{ $hazard->measure }}</td>
-                                        <td><a href="/hazards_tasks/edit/{{ $hazard->id }}" class="btn btn-sm btn-primary">Edit</a></td>
-                                        <td><a href="/hazards_tasks/delete/{{ $hazard->id }}" class="btn btn-sm btn-danger">Delete</a></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            
-                            </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <a href="/assessments/{{ $assessment->id }}/tasks" class="btn btn-primary">Back to tasks</a>
-                        </div>
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
-</div>
+                    </div><!-- Modal body -->
+                </div><!-- Modal Contennt -->
+                </div><!-- Modal Dialog -->
+            </div><!-- Modal -->
+      </div> <!-- Card -->
+    </div> <!-- Column -->
+  </div> <!-- Row -->
+  </div> <!-- Container -->
 @endsection

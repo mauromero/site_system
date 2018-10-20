@@ -24,12 +24,12 @@
 
                 <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/assessments/{{ $task->assessment_id }}/tasks">Tasks</a></li>
+                    <li class="breadcrumb-item"><a href="/assessments/{{ $task->assessment_id }}/tasks">Assessment</a></li>
                     <li class="breadcrumb-item"><a href="/tasks/edit/{{ $task->id }}">{{ $task->name }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Hazard</li>
                 </ol>
                 </nav>
-
+<!-- EDIT HAZARD -->
                  <form method="POST" action="/hazards_tasks/edit/{{ $hazard_task->id }}">
                     {{ csrf_field() }}
                     {{ method_field('PATCH') }}
@@ -53,14 +53,15 @@
 
                         <div class="form-group">
                             <label for="hazard">Hazard Description</label>
-                            <textarea class="form-control" id="hazard" name="hazard" rows="2">{{ $hazard_task->hazard }}</textarea>
+                            <textarea class="form-control" id="hazard" name="hazard" rows="4">{{ $hazard_task->hazard }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="measure">Preventive Measures</label>
-                            <textarea class="form-control" id="measure" name="measure" rows="2" >{{ $hazard_task->measure }}</textarea>
+                            <textarea class="form-control" id="measure" name="measure" rows="4" >{{ $hazard_task->measure }}</textarea>
                         </div>
                         <div class="text-right">
                         <button type="submit" class="btn btn-success ">Save</button>
+                        <a href="/hazards_tasks/delete/{{ $hazard->id }}" class="btn btn-danger">Delete</a>
                         </div>
                     </form>
                  

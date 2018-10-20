@@ -32,10 +32,7 @@ class CustomerController extends Controller
         if( auth()->user() ){
 
             $this->validate($request,[
-                'company' => 'required|max:255|unique:customers,company',
-                'name' => 'required|max:255',
-                'last_name' => 'required|max:255',
-                'email' => 'email|max:50'
+                'company' => 'required|max:255|unique:customers,company'
             ]);
             
             $new_customer = Customer::create([
