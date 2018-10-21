@@ -4,6 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
+        <!-- ALERT -->
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @if($error)
+        <strong>Alert!&nbsp;</strong>{{$error}}<br>
+        @else
+        Are you sure you want to delete this customer?
+        @endif
+                
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
             <!-- FORM -->            
             <form method="POST" action="/customers/delete/{{ $customer->id }}">
@@ -15,6 +27,13 @@
                         Delete Customer
                     </div>
                     <div class="card-body">
+
+                        <div class="form-group row">
+                            <label class="col-sm-4" for="company">Company</label>
+                            <div class="col-sm-8" >
+                                <input type="text" class="form-control" id="company" name="company"  value="{{ $customer->company }}" >
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-sm-4" for="name">Name</label>
@@ -58,15 +77,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-4" for="company">Company</label>
-                            <div class="col-sm-8" >
-                                <input type="text" class="form-control" id="company" name="company"  value="{{ $customer->company }}" >
-                            </div>
-                        </div>
-
-
-                    </div>
+                   </div>
                     <div class="card-footer">
                         <div class="form-group row">
                             <div class="col-sm-6">

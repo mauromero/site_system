@@ -48,14 +48,14 @@
                 <!-- Button trigger modal -->
                 <div class="text-right">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#hazardModal">
-                + Add task hazard
+                + Add hazard
                 </button>
                 </div>
 <!-- HAZARDS LIST TABLE -->
                 @if(!$tasks_hazards->isEmpty())
                     <div class="card mt-3 border-primary">
                         <div class="card-header bg-primary text-white">
-                        Hazards for task : {{ $task->name }} 
+                        Hazards list
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -87,7 +87,7 @@
         </div>
         </div>
     </div>
-            <!-- Modal -->
+            <!-- MODAL -->
             <div class="modal fade" id="hazardModal" tabindex="-1" role="dialog" aria-labelledby="hazardModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -126,7 +126,7 @@
                                 </div>
                             </div>
                             <div class="text-right">
-                            <button type="submit" class="btn btn-success ">+ Add hazard</button>
+                            <button type="submit" class="btn btn-success ">Save</button>
                             </div>
                         </form>
                     </div><!-- Modal body -->

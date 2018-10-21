@@ -187,11 +187,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-sm-6 text-center">
+                            <div class="form-group col-sm-6">
                                 <button type="submit" class="btn btn-success pull-right" name="save" value="save">Save Changes</button>
                             </div>
-                            <div class="form-group col-sm-6 text-center">
-                                <a href="/assessments" class="btn btn-primary pull-left">Cancel</a>
+                            <div class="form-group col-sm-6 text-right">
+                                <a href="/assessments" class="btn btn-primary">Cancel</a>
+                                <a class="btn btn-danger" href="/assessments/delete/{{ $assessment->id }}">Delete</a>
                             </div>
                             
                         </div>

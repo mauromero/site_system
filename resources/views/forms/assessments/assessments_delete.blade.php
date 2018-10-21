@@ -15,7 +15,7 @@
 
 
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Alert!&nbsp;</strong>Are you sure you want to delete this form?.
+                Are you sure you want to delete this form?.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -193,20 +193,10 @@
                     @if(!$tasks->isEmpty())
 
                         <div>
-
-                            <h5>Tasks</h5>
                             @foreach ($tasks as $task)
-                                <div class="card  border-primary mb-3">
-                                    <div class="card-header bg-primary text-white">     
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <h5> {{ $task->name }} </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                <div class="card  border-danger mb-3">
                                     <div class="card-body">
-                                    
+                                    <h5 class="card-title bg-light p-1">{{ $loop->iteration }}.&nbsp;{{ $task->name }} </h5>
                                         <table class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
@@ -248,7 +238,7 @@
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </div>
                                 <div class="col-sm-6 text-right">
-                                <a href="/users/forms" class="btn btn-primary">My Forms</a>
+                                <a href="/assessments" class="btn btn-primary">Cancel</a>
                                 </div>
                             </div>
                         </form>

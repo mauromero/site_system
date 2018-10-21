@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header bg-primary text-white">Assessments Forms</div>
                 <div class="card-body">
-
+<!-- SEARCH TOOL -->
                 <h5>Search</h5>
                 <form action="/assessments" method="get">
                     <div class="form-row align-items-center mb-2">
@@ -43,7 +43,7 @@
                 </div>
                 </div>
                 </form>
-
+ <!-- IN PROGRES/COMPLETED FILTER -->
                     <div class="row">
                         <div class="col-sm-6">
                             <a href="/assessments?submitted=0">In Progress</a> |
@@ -53,9 +53,7 @@
                             <a class="btn btn-primary" href="/assessments">Reset Filters</a>
                         </div>
                     </div>
-                       
-
-
+   <!-- LIST                     -->
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
                             <thead>
@@ -112,9 +110,6 @@
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="/assessments/edit/{{ $assessment->id }}" >
                                         Edit</a>
-                                    <a class="btn btn-sm btn-danger" href="/assessments/delete/{{ $assessment->id }}" >
-                                        Delete
-                                    </a>
                                 </td>
                                 @endif
                                 </tr>

@@ -96,7 +96,8 @@ class CustomerController extends Controller
 
     public function delete(Customer $customer){
         if( auth()->user() ){
-            return view('customers.delete',compact ('customer'));
+            $error=null;
+            return view('customers.delete',compact ('customer','error'));
         }else{
             return redirect('/home');
         }   
@@ -104,7 +105,16 @@ class CustomerController extends Controller
 
     public function destroy(Customer $customer){
         if( auth()->user() ){
-            $customer->delete();
+            try {
+                $customer->destroy($customer->id);
+            } catch ( \Illuminate\Database\QueryException $e) {
+                $error_code = $e->errorInfo[0];
+                if($error_code == 23000){
+                    $error = "This customer is linked to a form. Remove this customer from the form before delete it";
+                    return view('customers.delete',compact ('customer','error'));
+                }
+            }
+            
             return redirect('/customers');
         }else{
             return redirect('/home');
