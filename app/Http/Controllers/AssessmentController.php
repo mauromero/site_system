@@ -144,7 +144,19 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
-        //
+        if(auth()->user()){
+            $user = auth()->user();
+            $assessment = Assessment::find($id);
+            $customers = Customer::orderBy('company', 'asc')->get();
+            $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+            $hazards = Hazard::orderBy('name', 'asc')->get();
+            $tasks_hazards = hazard_task::all();
+            return view('forms.assessments.assessments_preview', compact('assessment', 'customers', 'tasks', 'hazards', 'tasks_hazards'));
+        }else{
+            return redirect('/home');
+        }  
+
+        
     }
 
     /**

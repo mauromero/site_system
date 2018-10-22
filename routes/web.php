@@ -44,6 +44,7 @@ Route::delete('/customers/delete/{customer}', 'CustomerController@destroy');
 
 // Assessments
 Route::get('/assessments', 'AssessmentController@index')->name('assessments');
+Route::get('/assessments/show/{assessment}', 'AssessmentController@show');
 Route::get('/assessments/create', 'AssessmentController@create');
 Route::post('/assessments', 'AssessmentController@store');
 Route::get('/assessments/edit/{assessment}', 'AssessmentController@edit');

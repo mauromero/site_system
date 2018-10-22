@@ -17,6 +17,7 @@
             <a class="nav-item nav-link border-primary" href="/assessments/edit/{{ $assessment->id }}">Form</a>
             <a class="nav-item nav-link border-primary text-white bg-primary" href="/assessments/{{ $task->assessment_id }}/tasks">Tasks</a>
             <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/image">Image</a>
+            <a class="nav-item nav-link border-primary" href="/assessments/show/{{ $assessment->id }}">Print</a>
         </nav>  
 
             <div class="card">

@@ -12,7 +12,12 @@
     
     <div class="row">
     <div class="col-sm-12">
-
+    <nav class="nav nav-tabs d-print-none">
+            <a class="nav-item nav-link border-primary" href="/assessments/edit/{{ $assessment->id }}">Form</a>
+            <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/tasks">Tasks</a>
+            <a class="nav-item nav-link border-primary" href="/assessments/{{ $assessment->id }}/image">Image</a>
+            <a class="nav-item nav-link border-primary text-white bg-primary" href="#">Print</a>
+        </nav>
 
             <div class="card">
                 <div class="card-body">
@@ -116,7 +121,7 @@
 
                                     <div class="card-body">
                                     
-                                        <table class="table table-striped table-sm">
+                                        <table class="table table-sm d-print-table">
                                             <thead>
                                                 <tr>
                                                 <th scope="col">Hazard</th>
