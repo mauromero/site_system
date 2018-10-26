@@ -62,7 +62,7 @@
                         </div>
                         <div class="text-right">
                         <button type="submit" class="btn btn-success ">Save</button>
-                        <a href="/hazards_tasks/delete/{{ $hazard->id }}" class="btn btn-danger">Delete</a>
+                        <a href="/hazards_tasks/delete/{{ $hazard_task->id }}" class="btn btn-danger">Delete</a>
                         </div>
                     </form>
                  

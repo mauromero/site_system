@@ -342,14 +342,10 @@ class AssessmentController extends Controller
     {
         if(auth()->user()){
             $assessment = Assessment::find($id);
-            if ( $assessment->user_id == auth()->user()->id){
-                $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
-                $hazards = Hazard::orderBy('name', 'asc')->get();
-                $tasks_hazards = hazard_task::all();
-                return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
-            }else{
-                return redirect('/home');
-            }  
+            $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
+            $hazards = Hazard::orderBy('name', 'asc')->get();
+            $tasks_hazards = hazard_task::all();
+            return view('forms.assessments.assessments_tasks', compact('assessment','hazards', 'tasks','tasks_hazards'));
         }else{
             return redirect('/home');
         }         
@@ -362,7 +358,7 @@ class AssessmentController extends Controller
             ]);
             $user = auth()->user();
             $assessment = Assessment::find($assessment->id);
-            if ($assessment->user_id == $user->id || $user->role == 'admin' ) {
+            if ($user) {
                 $new_task=Task::create([
                     'assessment_id'=> $assessment->id,
                     'name' => request('name'),
@@ -378,7 +374,7 @@ class AssessmentController extends Controller
     public function image_show($id){
             $user = auth()->user();
             $assessment = Assessment::find($id);
-            if ($assessment->user_id == $user->id  || $user->role == 'admin' ){
+            if ($user){
                 return view('forms.assessments.assessments_image', compact('assessment'));
             }else{
                 return redirect('home');
@@ -393,7 +389,7 @@ class AssessmentController extends Controller
             ]);
                 $user = auth()->user();
                 $assessment = Assessment::find($id);
-                if ($assessment->user_id == $user ->id || $user->role == 'admin' ){
+                if ($user){
                     if($assessment->image_name){
                         Storage::disk('public')->delete('locations/'.$assessment->image_name);
                     }
@@ -415,7 +411,6 @@ class AssessmentController extends Controller
     {
         if(auth()->user()){
                 $assessment = Assessment::find($id);
-                if ($assessment->user_id == auth()->user()->id){
                     if($assessment->image_name){
                         Storage::disk('public')->delete('locations/'.$assessment->image_name);
                         $assessment->image_name = null;
@@ -423,9 +418,7 @@ class AssessmentController extends Controller
                         $assessment->save(); 
                     }
                     return view('forms.assessments.assessments_image', compact('assessment'));
-                }else{
-                    return redirect('home');
-            }  
+
         }else{
             return redirect('home');
         }      

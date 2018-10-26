@@ -37,7 +37,7 @@
                     {{ method_field('PATCH') }}
                     
                     <div class="col-sm-8">
-                        <label for="name" class="sr-only">Task Name</label>
+                        <label for="name" ><strong>Task Name :</strong></label>
                         <input type="text" class="form-control" id="name" name="name"  value="{{ $task->name  }}" >
                     </div>
                     <div class="col-sm-4 text-right">

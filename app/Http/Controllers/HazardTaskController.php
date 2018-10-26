@@ -25,11 +25,11 @@ class HazardTaskController extends Controller
     public function create(Request $request)
     {
         $user = auth()->user();
-        $task = Task::find($request->task_id);
-        $hazards = Hazard::orderBy('name', 'asc')->get();
-        $assessment = Assessment::find($task->assessment_id);
-        $tasks_hazards = hazard_task::where('task_id', $task->id)->get();
-        if ($assessment->user_id == $user->id || $user->role == 'admin'){
+        if ( $user){
+            $task = Task::find($request->task_id);
+            $hazards = Hazard::orderBy('name', 'asc')->get();
+            $assessment = Assessment::find($task->assessment_id);
+            $tasks_hazards = hazard_task::where('task_id', $task->id)->get();
             return view('hazards_tasks.create', compact('hazards', 'task', 'assessment', 'tasks_hazards'));
         }else{
             return redirect('home');
@@ -78,10 +78,10 @@ class HazardTaskController extends Controller
     public function edit(hazard_task $hazard_task)
     {
         $user = auth()->user();
-        $hazards = Hazard::orderBy('name', 'asc')->get();
-        $task = Task::find($hazard_task->task_id);
-        $assessment = Assessment::find($task->assessment_id);
-        if ($assessment->user_id == $user->id || $user->role == 'admin'){
+        if ($user){
+            $hazards = Hazard::orderBy('name', 'asc')->get();
+            $task = Task::find($hazard_task->task_id);
+            $assessment = Assessment::find($task->assessment_id);
             return view('hazards_tasks.edit', compact('assessment','task','hazard_task','hazards'));
         }else{
             return redirect('home');
@@ -98,11 +98,10 @@ class HazardTaskController extends Controller
     public function update(Request $request, $id)
     {
         $user = auth()->user();
-        $hazard_task = hazard_task::find($id);
-        $task = Task::find($hazard_task->task_id);
-        $assessment = Assessment::find($task->assessment_id);
-        if ($assessment->user_id == $user->id || $user->role == 'admin'){
-        
+
+        if ($user){
+            $hazard_task = hazard_task::find($id);
+            $task = Task::find($hazard_task->task_id);
             
             $hazard_task->hazard_id = request('hazard_id');
             $hazard_task->hazard = request('hazard');
@@ -119,10 +118,11 @@ class HazardTaskController extends Controller
     public function delete(hazard_task $hazard_task)
     {
         $user = auth()->user();
-        $task = Task::find($hazard_task->task_id);
-        $assessment = Assessment::find($task->assessment_id);
-        $hazards = Hazard::orderBy('name', 'asc')->get();
-        if ($assessment->user_id == $user->id || $user->role == 'admin'){
+
+        if ($user){
+            $task = Task::find($hazard_task->task_id);
+            $assessment = Assessment::find($task->assessment_id);
+            $hazards = Hazard::orderBy('name', 'asc')->get();
             return view('hazards_tasks.delete', compact('assessment','task','hazard_task','hazards'));
         }else{
             return redirect('home');
@@ -138,12 +138,12 @@ class HazardTaskController extends Controller
     public function destroy(hazard_task $hazard_task)
     {
         $user = auth()->user();
-        $task = Task::find($hazard_task->task_id);
-        $assessment = Assessment::find($task->assessment_id);
-        if ($assessment->user_id == $user->id || $user->role == 'admin'){
+
+        if ($user){
+            $task = Task::find($hazard_task->task_id);
             $hazardTask = hazard_task::find($hazard_task->id);
             $hazardTask->delete();
-            return redirect('/tasks/edit/'.$hazard_task->task_id);
+            return redirect('/tasks/edit/'.$task->id);
         }else{
             return redirect('home');
         }   

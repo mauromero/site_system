@@ -26,7 +26,7 @@ class TaskController extends Controller
     {
             $user = auth()->user();
             $assessment = Assessment::find($assessment->id);
-            if ($assessment->user_id == $user->id || $user->role == 'admin'){
+            if ($user ){
                 $tasks = Task::where('assessment_id',$assessment->id)->with('hazards')->get();
                 $hazards = Hazard::orderBy('name', 'asc')->get();
                 $tasks_hazards = hazard_task::all();
@@ -78,7 +78,7 @@ class TaskController extends Controller
     {
         $user = auth()->user();
         $assessment = Assessment::find($task->assessment_id);
-        if ($assessment->user_id == $user->id || $user->role == 'admin'){
+        if ($user ){
             $hazards = Hazard::orderBy('name', 'asc')->get();
             $tasks_hazards = hazard_task::where('task_id', $task->id)->get();
             return view('tasks.edit', compact('assessment','task','hazards','tasks_hazards'));
@@ -109,7 +109,7 @@ class TaskController extends Controller
 
         $user = auth()->user();
         $assessment = Assessment::find($task->assessment_id);
-        if ($assessment->user_id == $user->id || $user->role == 'admin'){
+        if ($user ){
 
             $task = Task::find($task->id);
             $task->name = request('name');
@@ -127,7 +127,7 @@ class TaskController extends Controller
         $task = Task::find($task->id);
         $hazards = Hazard::orderBy('name', 'asc')->get();
         $assessment = Assessment::find($task->assessment_id);
-        if ($assessment->user_id == $user->id || $user->role == 'admin' ){
+        if ($user){
             $tasks_hazards = hazard_task::where('task_id', $task->id)->get();
             return view('tasks.delete', compact('assessment','task','tasks_hazards','hazards'));
         }else{
@@ -146,7 +146,7 @@ class TaskController extends Controller
         $user = auth()->user();
         $task = Task::find($task->id);
         $assessment = Assessment::find($task->assessment_id);
-        if ($assessment->user_id == $user->id || $user->role == 'admin' ){
+        if ($user  ){
             $task->delete();
             return redirect('/assessments/'.$assessment->id.'/tasks');
 
