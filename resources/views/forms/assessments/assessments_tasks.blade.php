@@ -56,33 +56,32 @@
                             Tasks list
                         </div>
                         @forelse ($tasks as $task)
-                        <div class="card-body">
+                        <div class="card-body pb-1">
                             <h5 class="card-title bg-light p-1"><strong>{{ $loop->iteration }}.&nbsp;{{ $task->name }} </strong></h5>
                             @if(!empty($tasks_hazards))
-                                <table class="table table-sm">
-                                        <tr>
-                                        <th scope="col">Hazard</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Measure</th>
-                                        </tr>
-                                    <tbody>                                            
-                                    @foreach ($tasks_hazards as $hazard)
-                                    @if($hazard->task_id == $task->id)
-                                    <tr>
-                                    <td>{{ $hazards->find($hazard->hazard_id)->name }}</td>
-                                    <td>{{ $hazard->hazard }}</td>
-                                    <td>{{ $hazard->measure }}</td>
-                                    </tr>
-                                    @endif
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                <div class="col-sm-2 font-weight-bold">Hazard</div>
+                                <div class="col-sm-5 font-weight-bold">Description</div>
+                                <div class="col-sm-5 font-weight-bold">Measure</div>
+                            </div>
+                              
+                                                                        
+                                @foreach ($tasks_hazards as $hazard)
+                                @if($hazard->task_id == $task->id)
+                            <div class="row mb-2">  
+                                <div class="col-sm-2">{{ $hazards->find($hazard->hazard_id)->name }}</div>
+                                <div class="col-sm-5">{{ $hazard->hazard }}</div>
+                                <div class="col-sm-5">{{ $hazard->measure }}</div>
+                            </div>
+                                @endif
+                                @endforeach
+                            
                             @endif  
                             
                         </div>  
-                        <div class="card-footer bg-white">
+                        <div class="card-footer bg-white pt-1 pb-1">
                         <div class="row">
-                            <div class="col-sm-12 text-right">
+                            <div class="col-sm-12 text-right pb-0 pt-0">
                                 <a href ="/tasks/edit/{{ $task->id }}" class="btn btn-primary btn-sm">Edit Task</a>
                             </div>   
                         </div>                           

@@ -5198,6 +5198,29 @@ tbody.collapse.show {
   }
 }
 
+/* @media all {
+	.page-break	{ display: none; }
+} */
+/* Custom print */
+
+.borderless table, .borderless td, .borderless th {
+  border: none;
+}
+@media print {
+
+  .page-break	{
+    display: block!important; 
+    float: none !important;
+    break-before:auto;
+    break-inside:avoid;
+    page-break-before: auto;
+    page-break-inside: avoid 
+  }
+  /* .page-break-clear {  clear: both; }*/
+  div, .row, .col { float: none !important; display: block!important; }
+
+}
+
 
 .breadcrumb {
   display: -webkit-box;

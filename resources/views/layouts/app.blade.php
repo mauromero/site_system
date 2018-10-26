@@ -11,7 +11,7 @@
     <title>SITE System</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" media="all">
 </head>
 <body >
     <div id="app"  >
